@@ -23,7 +23,11 @@ const userSchema = new Schema({
     type: Boolean,
     default: false
   },
-  issues: {
+  projects: {
+    type: Array,
+    default: []
+  },
+  tasks: {
     type: Array,
     default: []
   }

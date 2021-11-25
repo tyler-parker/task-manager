@@ -15,10 +15,6 @@ const taskSchema = new Schema({
         ref: "User",
         required: true
     },
-    projectId: {
-        type: Schema.Types.ObjectId,
-        ref:  "Project"
-    },
     priority: {
         type: String
     },

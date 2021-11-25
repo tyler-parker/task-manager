@@ -18,7 +18,7 @@ mongoose.connect(
     useCreateIndex: true,
     useFindAndModify: false
   },
-  () => console.log('Connected to the DB')
+  () => console.log('Connected to the task-manager DB')
 )
 
 app.use('/auth', require('./routes/authRouter.js'))

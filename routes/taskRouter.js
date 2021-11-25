@@ -1,124 +1,97 @@
 const express = require("express")
-const issueRouter = express.Router()
-const Issue = require('../models/Issue.js')
+const taskRouter = express.Router()
+const Task = require('../models/Task.js')
 
-// Get All Issues
-issueRouter.get("/", (req, res, next) => {
-  Issue.find((err, issues) => {
+// Get All Tasks
+taskRouter.get("/", (req, res, next) => {
+  Task.find((err, tasks) => {
     if (err) {
       res.status(500)
       return next(err)
     }
-    return res.status(200).send(issues)
+    return res.status(200).send(tasks)
   })
 })
 
-issueRouter.get('/user', (req, res, next) => {
-  Issue.find({ user: req.user._id }, (err, issues) => {
+//Get user tasks
+taskRouter.get('/user', (req, res, next) => {
+  Task.find({ user: req.user._id }, (err, tasks) => {
     if (err) {
       res.status(500)
       return next(err)
     }
-    return res.status(200).send(issues)
+    return res.status(200).send(tasks)
   })
 })
 
-issueRouter.get("/user/:userId", (req, res, next) => {
-  Issue.find(
+//Get one user task
+taskRouter.get("/user/:userId", (req, res, next) => {
+  Task.find(
     { user: req.params.userId },
-    (err, issues) => {
+    (err, tasks) => {
       if (err) {
         res.status(500)
         return next(err)
       }
-      return res.status(200).send(issues)
+      return res.status(200).send(tasks)
     })
 })
 
-//get a issue by the id
-issueRouter.get('/:issueId', (req, res, next) => {
-  Issue.findById(req.params.issueId, (err, issue) => {
+//get a task by the id
+taskRouter.get('/:taskId', (req, res, next) => {
+  Task.findById(req.params.taskId, (err, task) => {
     if (err) {
       res.status(500)
       return next(err)
-    } else if (!issue) {
+    } else if (!task) {
       res.status(404)
-      return next(new Error('No post item has been found.'))
+      return next(new Error('No task has been found.'))
     }
-    return res.send(issue)
+    return res.send(task)
   })
 })
 
-// Add new Issue
-issueRouter.post("/", (req, res, next) => {
+// Add new Task
+taskRouter.post("/", (req, res, next) => {
   req.body.user = req.user._id
-  const newIssue = new Issue(req.body)
-  newIssue.save((err, savedIssue) => {
+  const newTask = new Task(req.body)
+  newTask.save((err, savedTask) => {
     if (err) {
       res.status(500)
       return next(err)
     }
-    return res.status(201).send(savedIssue)
+    return res.status(201).send(savedTask)
   })
 })
 
-// Delete Issue
-issueRouter.delete("/:issueId", (req, res, next) => {
-  Issue.findOneAndDelete(
-    { _id: req.params.issueId, user: req.user._id },
-    (err, deletedIssue) => {
+// Delete Task
+taskRouter.delete("/:taskId", (req, res, next) => {
+  Task.findOneAndDelete(
+    { _id: req.params.taskId, user: req.user._id },
+    (err, deletedTask) => {
       if (err) {
         res.status(500)
         return next(err)
       }
-      return res.status(200).send(`Successfully deleted issue: ${deletedIssue.title}`)
+      return res.status(200).send(`Successfully deleted task: ${deletedTask.title}`)
     }
   )
 })
 
-// Update Issue 
-issueRouter.put("/:issueId", (req, res, next) => {
-  Issue.findOneAndUpdate(
-    { _id: req.params.issueId, user: req.user._id },
+// Update Task 
+taskRouter.put("/:taskId", (req, res, next) => {
+  Task.findOneAndUpdate(
+    { _id: req.params.taskId, user: req.user._id },
     req.body,
     { new: true },
-    (err, updatedIssue) => {
+    (err, updatedTask) => {
       if (err) {
         res.status(500)
         return next(err)
       }
-      return res.status(201).send(updatedIssue)
+      return res.status(201).send(updatedTask)
     }
   )
 })
 
-//Upvote
-issueRouter.put("/upvotes/:issueId", (req, res, next) => {
-  Issue.findOneAndUpdate(
-    { _id: req.params.issueId },
-    { $inc: { upVotes: 1 } },
-    { new: true },
-    (err, issue) => {
-      if (err) {
-        res.status(500)
-        return next(err)
-      }
-      return res.status(201).send(issue)
-    }
-  )
-})
-//Downvote
-issueRouter.put("/downvotes/:issueId", (req, res, next) => {
-  Issue.findOneAndUpdate(
-    { _id: req.params.issueId },
-    { $inc: { downVotes: 1 } },
-    { new: true },
-    (err, issue) => {
-      if (err) {
-        res.status(500)
-      }
-      return res.status(200).send(issue)
-    })
-})
-
-module.exports = issueRouter;
+module.exports = taskRouter;
