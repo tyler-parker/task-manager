@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const issueSchema = new Schema({
+const taskSchema = new Schema({
     title: {
         type: String,
         required: true
@@ -15,16 +15,17 @@ const issueSchema = new Schema({
         ref: "User",
         required: true
     },
-    imgUrl: {
+    projectId: {
+        type: Schema.Types.ObjectId,
+        ref:  "Project"
+    },
+    priority: {
+        type: String
+    },
+    status: {
         type: String,
         required: true
-    },
-    upVotes: {
-        type: Number
-    },
-    downVotes: {
-        type: Number
     }
 })
 
-module.exports = mongoose.model("Issue", issueSchema)
+module.exports = mongoose.model("Task", taskSchema)
