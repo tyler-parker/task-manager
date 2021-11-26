@@ -12,20 +12,14 @@ import {
   Text
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import faker from 'faker'
 import UserMenu from './UserMenu'
 import { UserContext } from "../context/UserProvider.js"
 
 export default function Navbar(props) {
 
-  const { logout, token } = props
-  const {user: { username, avatar }} = useContext(UserContext)
+  const { logout } = props
+  const {user: { username }} = useContext(UserContext)
   const { colorMode, toggleColorMode } = useColorMode()
-  const [avatarUrl, setAvatarUrl] = useState('')
-  
-  useEffect(() => {
-    setAvatarUrl(faker.image.animals)
-  }, [token])
 
   return (
       <Box bg={useColorModeValue('gray.100', 'gray.900')}>
@@ -33,13 +27,13 @@ export default function Navbar(props) {
         <Link to='/public'>
           <Heading size='xl' color='teal.400' m={6}>Rock-The-Vote</Heading>
         </Link>
-          <Flex alignItems={'center'}>
+          <Flex p={6} alignItems={'center'}>
             <Stack direction={'row'} spacing={5} justify='center' align='center'>
               <Text fontSize='large'>Welcome, { username }</Text>
               <Button onClick={toggleColorMode}>
                 {colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
               </Button>
-              <UserMenu username={username} logout={logout} avatarUrl={avatarUrl} />
+              <UserMenu username={username} logout={logout} />
             </Stack>
           </Flex>
         </Flex>

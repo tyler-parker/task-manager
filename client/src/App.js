@@ -13,8 +13,8 @@ export default function App() {
     const { token, logout } = useContext(UserContext)
 
     return (
-        <div className="app">
-            { token && <Navbar logout={logout} /> }
+        <>
+        <Navbar logout={logout} />
             <Switch>
                 <Route
                     exact path="/"
@@ -33,7 +33,7 @@ export default function App() {
                     token={token}
                 />
             </Switch>
-        </div>
+        </>
     )
 }
 

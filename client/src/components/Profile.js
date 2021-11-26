@@ -26,7 +26,7 @@ export default function Profile() {
 
     return (
         <Box justify='center' align='center' m={5}>
-            <TaskForm addUserIssue={addUserTask} />
+            <TaskForm addUserTask={addUserTask} />
                 <Divider />
             <Box w='85%'>
                 <Container m={5}>
