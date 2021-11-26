@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import PublicIssues from "./PublicIssues.js"
+import PublicTasks from "./PublicTasks.js"
 import axios from "axios"
 import {
     Box,
@@ -35,7 +35,7 @@ import {
             <Divider />
             <Heading align='center' p={4}>{username}'s Tasks</Heading>
             <Grid gridTemplateColumns='repeat(2, 1fr)' gap={6}>
-                {tasks.map(task => <PublicIssues {...task}  key={task._id}/>)}
+                {tasks.map(task => <PublicTasks {...task}  key={task._id}/>)}
             </Grid>
         </Box>
     )
