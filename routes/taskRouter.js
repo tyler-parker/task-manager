@@ -52,8 +52,9 @@ taskRouter.get('/:taskId', (req, res, next) => {
 })
 
 // Add new Task
-taskRouter.post("/", (req, res, next) => {
+taskRouter.post("/:projectId", (req, res, next) => {
   req.body.user = req.user._id
+  req.body.projectId = req.params.projectId
   const newTask = new Task(req.body)
   newTask.save((err, savedTask) => {
     if (err) {

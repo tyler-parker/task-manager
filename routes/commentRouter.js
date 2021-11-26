@@ -3,10 +3,10 @@ const commentRouter = express.Router()
 const Comment = require("../models/Comment.js")
 
 
-//get comment for a specific issue.
-commentRouter.get("/:issueId", (req, res, next) => {
+//get comment for a specific task.
+commentRouter.get("/:taskId", (req, res, next) => {
     Comment.find(
-        { issueId: req.params.issueId },
+        { taskId: req.params.taskId },
         (err, comments) => {
             if (err) {
                 res.status(500)
@@ -16,11 +16,11 @@ commentRouter.get("/:issueId", (req, res, next) => {
         }
     )
 })
-//comment, userId, username, issueId
-commentRouter.post('/:issueId', (req, res, next) => {
+//comment, userId, username, taskId
+commentRouter.post('/:taskId', (req, res, next) => {
     req.body.userId = req.user._id
     req.body.username = req.user.username
-    req.body.issueId = req.params.issueId
+    req.body.taskId = req.params.taskId
     const newComment = new Comment(req.body)
     newComment.save(
         (err, comment) => {
@@ -32,9 +32,9 @@ commentRouter.post('/:issueId', (req, res, next) => {
         }
     )
 })
-commentRouter.put('/:issueId', (req, res, next) => {
+commentRouter.put('/:taskId', (req, res, next) => {
     Comment.findByIdAndUpdate(
-        { _id: req.params.issueId, user: req.user._id },
+        { _id: req.params.taskId, user: req.user._id },
         req.body,
         { new: true },
         (err, comment) => {
