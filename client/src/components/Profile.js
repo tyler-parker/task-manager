@@ -1,6 +1,6 @@
 import React, {useEffect, useContext} from 'react'
 import IssueForm from './IssueForm.js'
-import Issue from './Issue'
+import Task from './Task'
 import { UserContext } from "../context/UserProvider.js"
 import {
     Box,
@@ -14,26 +14,26 @@ import {
 export default function Profile() {
 
     const {
-        getUserIssues,
-        addUserIssue,
-        issues
+        getUserTasks,
+        addUserTask,
+        tasks
     } = useContext(UserContext)
 
     useEffect(() => {
-        getUserIssues()
+        getUserTasks()
     }, [])
 
 
     return (
         <Box justify='center' align='center' m={5}>
-            <IssueForm addUserIssue={addUserIssue} />
+            <IssueForm addUserIssue={addUserTask} />
                 <Divider />
             <Box w='85%'>
                 <Container m={5}>
                     <Heading size='xl' >Your Topics</Heading>
                 </Container>
                 <Grid templateColumns='repeat(2, 1fr)' gap={6}>
-                    {issues.map(issue => <Issue {...issue} key={issue._id} />)}
+                    {tasks.map(task => <Task {...task} key={task._id} />)}
                 </Grid>
             </Box>
         </Box>
