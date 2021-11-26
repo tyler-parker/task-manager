@@ -19,10 +19,13 @@ export default function EditForm(props) {
     const initInputs = {
         title: props.title || "",
         description: props.description || "",
+        priority: props.priority || "",
+        status: props.status || ""
     }
     const [inputs, setInputs] = useState(initInputs)
-    const { editUserIssue } = useContext(UserContext)
-    const { setEditToggle, _id } = props
+    const { editUserTask } = useContext(UserContext)
+    const { setEditToggle, _id, priority } = props
+    const statusOptions = ['Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
 
     function handleChange(e) {
         const { name, value } = e.target
@@ -35,7 +38,7 @@ export default function EditForm(props) {
 
     function handleSubmit(e) {
         e.preventDefault()
-        editUserIssue(inputs, _id)
+        editUserTask(inputs, _id)
         setEditToggle(prevState => !prevState)
     }
 
@@ -46,7 +49,7 @@ export default function EditForm(props) {
         <Flex align={'center'} justify={'center'}>
             <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
                 <Stack align={'center'}>
-                    <Heading fontSize={'2xl'}>Edit Issue</Heading>
+                    <Heading fontSize={'2xl'}>Edit Task</Heading>
                 </Stack>
                 <Box
                     rounded={'lg'}
@@ -66,13 +69,13 @@ export default function EditForm(props) {
                                 />
                         </FormControl>
                         <FormControl>
-                            <FormLabel>Image URL</FormLabel>
-                                <Input
-                                    onChange={handleChange} 
-                                    type="text"
-                                    name="imgUrl"
-                                    value={imgUrl}
-                                />
+                        <FormLabel>Priority</FormLabel>
+                            <Input
+                                onChange={handleChange} 
+                                type="text" 
+                                name="priority"
+                                value={priority}
+                            />
                         </FormControl>
                         <FormControl>
                             <FormLabel>Description</FormLabel>

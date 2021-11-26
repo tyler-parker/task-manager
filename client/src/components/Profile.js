@@ -1,5 +1,5 @@
 import React, {useEffect, useContext} from 'react'
-import IssueForm from './IssueForm.js'
+import TaskForm from './TaskForm.js'
 import Task from './Task'
 import { UserContext } from "../context/UserProvider.js"
 import {
@@ -26,7 +26,7 @@ export default function Profile() {
 
     return (
         <Box justify='center' align='center' m={5}>
-            <IssueForm addUserIssue={addUserTask} />
+            <TaskForm addUserIssue={addUserTask} />
                 <Divider />
             <Box w='85%'>
                 <Container m={5}>

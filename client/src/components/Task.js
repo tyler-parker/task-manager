@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react"
 import { UserContext } from "../context/UserProvider.js"
-import EditIssueForm from "./EditIssueForm.js"
+import EditTaskForm from "./EditTaskForm.js"
 import {
   Box,
   Center,
@@ -15,7 +15,6 @@ import {
   IconButton,
   Icon
 } from '@chakra-ui/react';
-import { BsArrowUpSquareFill, BsArrowDownSquareFill, BsDot } from 'react-icons/bs'
 
 export default function Task(props) {
 
@@ -90,10 +89,10 @@ export default function Task(props) {
           </Stack>
         </Box>
           :
-            <EditIssueForm 
+            <EditTaskForm 
               _id={_id} 
               deleteUserTask={deleteUserTask} 
-              {...props}  
+              {...props}
               setEditToggle={setEditToggle} 
               addUserTask={addUserTask} 
             />

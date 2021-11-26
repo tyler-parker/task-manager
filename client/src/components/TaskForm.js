@@ -17,14 +17,17 @@ import {
 const initInputs = {
     title:"",
     description:"",
-    imgUrl:""
+    imgUrl:"",
+    priority: "",
+    status: "Backlogged"
 }
 
-export default function PostForm(props){
+export default function TaskForm(props){
 
     const [inputs, setInputs] = useState(initInputs)
-    const {title, description, imgUrl} = inputs
-    const { addUserIssue } = props
+    const {title, description, priority, status} = inputs
+    const { addUserTask } = props
+    const statusOptions = ['Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
 
     function handleChange(e){
         const {name, value} = e.target
@@ -36,7 +39,7 @@ export default function PostForm(props){
 
     function handleSubmit(e){
         e.preventDefault()
-        addUserIssue(inputs)
+        addUserTask(inputs)
         setInputs(initInputs)
     }
 
@@ -47,10 +50,7 @@ export default function PostForm(props){
         >
         <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
             <Stack align={'center'}>
-                <Heading fontSize={'4xl'}>Create An Issue</Heading>
-                <Text fontSize={'lg'}>
-                    for other users to  <Link to='/public'>vote and comment on</Link> ✌️😎
-                </Text>
+                <Heading fontSize={'4xl'}>Create A Task</Heading>
             </Stack>
             <Box
             rounded={'lg'}
@@ -69,12 +69,12 @@ export default function PostForm(props){
                             />
                     </FormControl>
                     <FormControl>
-                        <FormLabel>Image URL</FormLabel>
+                        <FormLabel>Priority</FormLabel>
                             <Input
                                 onChange={handleChange} 
-                                type="text"
-                                name="imgUrl"
-                                value={imgUrl}
+                                type="text" 
+                                name="priority"
+                                value={priority}
                             />
                     </FormControl>
                     <FormControl>
