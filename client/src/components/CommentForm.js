@@ -49,7 +49,7 @@ export default function CommentForm(props) {
             boxShadow={'xl'} m={6}
         >
                 <FormControl>
-                    <FormLabel>Title</FormLabel>
+                    <FormLabel>Enter Your Comment</FormLabel>
                         <Input
                             onChange={handleChange} 
                             type="text" 

@@ -1,5 +1,5 @@
 import React, {useEffect, useContext} from 'react'
-import IssueForm from './IssueForm.js'
+import TaskForm from './TaskForm.js'
 import Task from './Task'
 import { UserContext } from "../context/UserProvider.js"
 import {
@@ -7,7 +7,8 @@ import {
     Heading,
     Divider,
     Container,
-    Grid
+    Grid,
+    Flex
 } from '@chakra-ui/react'
 
 
@@ -25,17 +26,15 @@ export default function Profile() {
 
 
     return (
-        <Box justify='center' align='center' m={5}>
-            <IssueForm addUserIssue={addUserTask} />
+        <Box w='full' justify='center' align='center'>
+            <TaskForm addUserTask={addUserTask} />
                 <Divider />
-            <Box w='85%'>
-                <Container m={5}>
-                    <Heading size='xl' >Your Topics</Heading>
+                <Container justify='center' align='center' m={5}>
+                    <Heading size='xl' >Your Tasks</Heading>
                 </Container>
-                <Grid templateColumns='repeat(2, 1fr)' gap={6}>
+                <Flex direction='row'>
                     {tasks.map(task => <Task {...task} key={task._id} />)}
-                </Grid>
-            </Box>
+                </Flex>
         </Box>
     )
 }

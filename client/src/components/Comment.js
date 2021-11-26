@@ -19,13 +19,8 @@ import {
 
 export default function Comment(props) {
 const { username, deleteComment, _id, comment, userComments } = props
-const [avatarUrl, setAvatarUrl] = useState('')
 const [show, setShow] = useState(false)
 const handleToggle = () => setShow(!show)
-
-useEffect(() => {
-    setAvatarUrl(faker.image.animals)
-  }, [])
 
     return (
         <>

@@ -15,8 +15,8 @@ import {
 } from '@chakra-ui/react'
 
 export default function UserMenu(props) {
-    const { avatarUrl, logout } = props
-    const {user: { username, avatar }} = useContext(UserContext)
+    const { logout } = props
+    const {user: { username }} = useContext(UserContext)
 
     return (
         <>
@@ -49,7 +49,7 @@ export default function UserMenu(props) {
                   </Link>
                   <Link to='/public'>
                     <MenuItem>
-                      Public Issues
+                      Public Tasks
                     </MenuItem>
                   </Link>
                   <Link to='/'>

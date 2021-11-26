@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react"
 import { UserContext } from "../context/UserProvider.js"
-import EditIssueForm from "./EditIssueForm.js"
+import EditTaskForm from "./EditTaskForm.js"
 import {
   Box,
   Center,
@@ -8,14 +8,10 @@ import {
   Heading,
   Text,
   Stack,
-  Image,
+  Container,
   Collapse,
-  HStack,
-  Avatar,
-  IconButton,
-  Icon
+  HStack
 } from '@chakra-ui/react';
-import { BsArrowUpSquareFill, BsArrowDownSquareFill, BsDot } from 'react-icons/bs'
 
 export default function Task(props) {
 
@@ -27,25 +23,18 @@ export default function Task(props) {
   const handleToggle = () => setShow(!show)
 
   return (
-    <Center py={12}>
+    <>
       {
         !editToggle ?
         <Box
         role={'group'}
         p={6}
-        maxW={'950px'}
-        w={'full'}
+        m={6}
+        w={'90%'}
         boxShadow={'2xl'}
         rounded={'lg'}
-        pos={'relative'}
+        alignSelf='center'
         >
-          <Image
-            rounded={'lg'}
-            height={230}
-            width={282}
-            objectFit={'cover'}
-            src={imgUrl}
-          />
           <Stack pt={10} align={'center'}>
             <Text color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'}>
               { userId }
@@ -90,14 +79,14 @@ export default function Task(props) {
           </Stack>
         </Box>
           :
-            <EditIssueForm 
+            <EditTaskForm 
               _id={_id} 
               deleteUserTask={deleteUserTask} 
-              {...props}  
+              {...props}
               setEditToggle={setEditToggle} 
               addUserTask={addUserTask} 
             />
       }
-    </Center>
+    </>
   )
 }

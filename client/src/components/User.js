@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import PublicIssues from "./PublicIssues.js"
+import PublicTasks from "./PublicTasks.js"
 import axios from "axios"
 import {
     Box,
@@ -10,7 +10,7 @@ import {
 
  function User(props) {
     const { username, _id} = props
-    const [issues, setIssues] = useState([])
+    const [tasks, setTasks] = useState([])
     const userAxios = axios.create()
 
     userAxios.interceptors.request.use(config => {
@@ -20,8 +20,8 @@ import {
     })
 
     useEffect(() => {
-        userAxios.get(`/api/issue/user/${_id}`)
-        .then(res => setIssues(res.data))
+        userAxios.get(`/api/task/user/${_id}`)
+        .then(res => setTasks(res.data))
         .catch(err => console.log(err))
     }, [])
 
@@ -33,9 +33,9 @@ import {
         pos={'relative'}
         >
             <Divider />
-            <Heading align='center' p={4}>{username}'s Issues</Heading>
+            <Heading align='center' p={4}>{username}'s Tasks</Heading>
             <Grid gridTemplateColumns='repeat(2, 1fr)' gap={6}>
-                {issues.map(issue => <PublicIssues {...issue}  key={issue._id}/>)}
+                {tasks.map(task => <PublicTasks {...task}  key={task._id}/>)}
             </Grid>
         </Box>
     )

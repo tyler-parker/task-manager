@@ -8,18 +8,15 @@ import {
     Heading,
     Text,
     Stack,
-    Image,
     Collapse,
     HStack,
     Button,
-    IconButton,
     Divider,
   } from '@chakra-ui/react';
-  import { BsArrowUpSquareFill, BsArrowDownSquareFill, BsDot } from 'react-icons/bs'
 
 
-export default function PublicIssues(props) {
-    const { title, description, imgUrl, _id, upVotes, downVotes, userId } = props
+export default function PublicTasks(props) {
+    const { title, description, _id, userId } = props
 
     const userAxios = axios.create()
 
@@ -31,8 +28,6 @@ export default function PublicIssues(props) {
 
     const [userComments, setUserComments] = useState([])
     const [userComment, setUserComment] = useState("")
-    const [votes, setVotes] = useState({ upVotes: upVotes || 0, downVotes: downVotes || 0 })
-    const [voteErrMsg, setVoteErr] = useState("")
     const [commentToggle, setCommentToggle] = useState(false)
     const [show, setShow] = useState(false)
     const handleToggle = () => setShow(!show)
@@ -52,8 +47,8 @@ export default function PublicIssues(props) {
       getAllComments()
     }, [])
     
-    function submitComment(newComment, issueId) {
-        userAxios.post(`/api/comment/${issueId}`, newComment)
+    function submitComment(newComment, taskId) {
+        userAxios.post(`/api/comment/${taskId}`, newComment)
             .then(res => {
                 setUserComments(prevState => [...prevState, res.data])
             })
@@ -66,18 +61,6 @@ export default function PublicIssues(props) {
             .then(res => setUserComments(prevState => prevState.filter(comment => comment._id !== commentId)))
             .catch(err => console.log(err))
             getAllComments()
-    }
-
-    function upVote(issueId) {
-        userAxios.put(`api/issue/upvotes/${issueId}`)
-            .then(res => setVotes(prevVotes => ({ ...prevVotes, upVotes: res.data.upVotes || prevVotes.upVotes })))
-            .catch(err => setVoteErr(err.response.data.errMsg))
-    }
-
-    function downVote(issueId) {
-        userAxios.put(`api/issue/downvotes/${issueId}`)
-            .then(res => setVotes(prevVotes => ({ ...prevVotes, downVotes: res.data.downVotes || prevVotes.downVotes })))
-            .catch(err => console.log(err.response.data.errMsg))
     }
 
     return (
@@ -93,13 +76,6 @@ export default function PublicIssues(props) {
             pos={'relative'}
             align='center'
             >
-            <Image
-                rounded={'lg'}
-                height={330}
-                width={382}
-                objectFit={'cover'}
-                src={imgUrl}
-            />
                 <Stack pt={10} align={'center'}>
                     <Text color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'}>
                     { userId }
@@ -122,28 +98,11 @@ export default function PublicIssues(props) {
                         </Box>
                         <Divider />
                         <HStack align='center' justify='center' spacing={5} pt={5}>
-                            <span>{votes.upVotes}</span>
-                            <IconButton 
-                                onClick={() => upVote(_id)}
-                                icon={<BsArrowUpSquareFill />}
-                                colorScheme='green'
-                            >
-                                UpVote
-                            </IconButton>
-                            <IconButton 
-                                onClick={() => downVote(_id)}
-                                icon={<BsArrowDownSquareFill />}
-                                colorScheme='red'
-                                >
-                                DownVote
-                            </IconButton>
-                            <span>{votes.downVotes}</span>
                             <Button 
                                 onClick={() => setCommentToggle(prevToggle => !prevToggle)}
                             >
                                 View Comments
                             </Button>
-                            <Text color='red.600'>{voteErrMsg}</Text>
                         </HStack>
                     </Stack>
             </Stack>
