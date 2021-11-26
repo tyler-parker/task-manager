@@ -77,7 +77,7 @@ function ProjectProvider(props){
                 project
             }}
         >
-
+            {props.children}
         </ProjectContext.Provider>
     )
 }
