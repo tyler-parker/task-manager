@@ -17,12 +17,12 @@ import {
 } from '@chakra-ui/react';
 import { BsArrowUpSquareFill, BsArrowDownSquareFill, BsDot } from 'react-icons/bs'
 
-export default function Issue(props) {
+export default function Task(props) {
 
   const [show, setShow] = useState(false)
-  const { title, description, imgUrl, _id, upVotes, downVotes, userId } = props
+  const { title, description, imgUrl, _id, userId } = props
   const [editToggle, setEditToggle] = useState(false)
-  const { addUserIssue, deleteUserIssue } = useContext(UserContext)
+  const { addUserTask, deleteUserTask } = useContext(UserContext)
 
   const handleToggle = () => setShow(!show)
 
@@ -73,16 +73,16 @@ export default function Issue(props) {
                   size='md'
                   onClick={() => setEditToggle(prevState => !prevState)}
                 >
-                  Edit Issue
+                  Edit Task
                 </Button>
 
                 <Button 
-                  onClick={() => deleteUserIssue(_id)}
+                  onClick={() => deleteUserTask(_id)}
                   variant='outline' 
                   colorScheme='red' 
                   size='md' 
                 >
-                  Delete Issue
+                  Delete Task
                 </Button>
 
               </HStack>
@@ -92,10 +92,10 @@ export default function Issue(props) {
           :
             <EditIssueForm 
               _id={_id} 
-              deleteUserIssue={deleteUserIssue} 
+              deleteUserTask={deleteUserTask} 
               {...props}  
               setEditToggle={setEditToggle} 
-              addUserIssue={addUserIssue} 
+              addUserTask={addUserTask} 
             />
       }
     </Center>

@@ -14,13 +14,13 @@ function UserProvider(props) {
     const initState = {
         user: JSON.parse(localStorage.getItem('user')) || {},
         token: localStorage.getItem('token') || "",
-        issues: [],
+        tasks: [],
         comment: [],
         errMsg: ""
     }
 
     const [userState, setUserState] = useState(initState)
-    const [allIssues, setAllIssues] = useState([])
+    const [allTasks, setAllTasks] = useState([])
 
     function signup(credentials) {
         axios.post('/auth/signup', credentials)
@@ -42,7 +42,7 @@ function UserProvider(props) {
                 const { user, token } = res.data
                 localStorage.setItem('token', token)
                 localStorage.setItem('user', JSON.stringify(user))
-                getUserIssues()
+                getUserTasks()
                 setUserState(prevUserState => ({
                     ...prevUserState,
                     user,
@@ -57,7 +57,7 @@ function UserProvider(props) {
         setUserState({
             user: {},
             token: "",
-            issues: [],
+            tasks: [],
             comment: []
         })
     }
@@ -68,51 +68,51 @@ function UserProvider(props) {
         }))
     }
 
-    function getAllUserIssues() {
-        userAxios.get("/api/issue")
-            .then(res => setAllIssues(res.data))
+    function getAllUserTasks() {
+        userAxios.get("/api/task")
+            .then(res => setAllTasks(res.data))
             .catch(err => console.log(err.response.data.errMsg))
     }
 
-    function getUserIssues() {
-        userAxios.get('/api/issue/user')
+    function getUserTasks() {
+        userAxios.get('/api/task/user')
             .then(res => {
                 setUserState(prevState => ({
                     ...prevState,
-                    issues: res.data
+                    tasks: res.data
                 }))
             })
             .catch(err => console.log(err))
     }
 
-    function addUserIssue(newIssue) {
-        userAxios.post('/api/issue', newIssue)
+    function addUserTask(newTask) {
+        userAxios.post('/api/task', newTask)
             .then(res => {
                 setUserState(prevState => ({
                     ...prevState,
-                    issues: [...prevState.issues, res.data]
+                    tasks: [...prevState.tasks, res.data]
                 }))
             })
             .catch(err => console.log(err))
     }
 
-    function editUserIssue(newIssue, issueId) {
-        userAxios.put(`/api/issue/${issueId}`, newIssue)
+    function editUserTask(newTask, taskId) {
+        userAxios.put(`/api/task/${taskId}`, newTask)
             .then(res => setUserState(prevState => ({
                 ...prevState,
-                issues: prevState.issues.map(issue => issue._id !== issueId ? issue : res.data)
+                tasks: prevState.tasks.map(task => task._id !== taskId ? task : res.data)
             })))
     }
 
-    function deleteUserIssue(issueId) {
-        userAxios.delete(`/api/issue/${issueId}`)
+    function deleteUserTask(taskId) {
+        userAxios.delete(`/api/task/${taskId}`)
             .then(res => setUserState(prevState => ({
                 ...prevState,
-                issues: prevState.issues.filter(issue => issue._id !== issueId)
+                tasks: prevState.tasks.filter(task => task._id !== taskId)
             })))
             .catch(err => console.log(err)
             )
-        return getUserIssues()
+        return getUserTasks()
     }
 
     return (
@@ -122,12 +122,11 @@ function UserProvider(props) {
                 signup,
                 login,
                 logout,
-                allIssues,
-                getAllUserIssues,
-                addUserIssue,
-                getUserIssues,
-                editUserIssue,
-                deleteUserIssue
+                getAllUserTasks,
+                addUserTask,
+                getUserTasks,
+                editUserTask,
+                deleteUserTask
             }}>
 
             {props.children}
