@@ -22,10 +22,10 @@ export default function Navbar(props) {
   const { colorMode, toggleColorMode } = useColorMode()
 
   return (
-      <Box bg={useColorModeValue('gray.100', 'gray.900')}>
+      <Box bg={useColorModeValue('gray.300', 'gray.900')}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
         <Link to='/public'>
-          <Heading size='xl' color='teal.400' m={6}>Rock-The-Vote</Heading>
+          <Heading size='xl' color='blue.500' m={6}>Task Manager</Heading>
         </Link>
           <Flex p={6} alignItems={'center'}>
             <Stack direction={'row'} spacing={5} justify='center' align='center'>
