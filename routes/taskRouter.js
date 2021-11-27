@@ -51,6 +51,19 @@ taskRouter.get('/:taskId', (req, res, next) => {
   })
 })
 
+taskRouter.get('/project/:projectId', (req, res, next) => {
+  Task.find({projectId: req.params.projectId}, (err, tasks) => {
+    if (err) {
+      res.status(500)
+      return next(err)
+    } else if (!tasks) {
+      res.status(404)
+      return next(new Error('No tasks found in your project'))
+    }
+    return res.send(tasks)
+  })
+})
+
 // Add new Task
 taskRouter.post("/:projectId", (req, res, next) => {
   req.body.user = req.user._id
