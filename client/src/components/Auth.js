@@ -30,8 +30,7 @@ export default function Auth() {
     const handleToggle = () => { setToggle(prev => !prev) }
 
     return (
-        <div className="auth-container">
-            <h1>Voting App</h1>
+        <>
             {!toggle ?
                 <>
                     <AuthForm
@@ -44,7 +43,6 @@ export default function Auth() {
                         handleToggle={handleToggle}
                         accountStatus='Already Have An Account?'
                     />
-                    <p onClick={() => setToggle(prev => !prev)}>Already a member?</p>
                 </>
                 :
                 <>
@@ -58,11 +56,10 @@ export default function Auth() {
                         handleToggle={handleToggle}
                         accountStatus="Don't Have An Account?"
                     />
-                    <p onClick={() => setToggle(prev => !prev)}>Not a member?</p>
                 </>
             }
 
-        </div>
+        </>
 
     )
 }

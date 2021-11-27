@@ -2,6 +2,7 @@ import React, {useEffect, useContext} from 'react'
 import TaskForm from './TaskForm.js'
 import Task from './Task'
 import { UserContext } from "../context/UserProvider.js"
+import { ProjectContext } from '../context/ProjectProvider'
 import {
     Box,
     Heading,
@@ -20,8 +21,14 @@ export default function Profile() {
         tasks
     } = useContext(UserContext)
 
+    const {
+        getUserProjects,
+        userProjects
+    } = useContext(ProjectContext)
+
     useEffect(() => {
-        getUserTasks()
+        getUserProjects()
+        console.log(userProjects);
     }, [])
 
 
@@ -33,7 +40,7 @@ export default function Profile() {
                     <Heading size='xl' >Your Tasks</Heading>
                 </Container>
                 <Flex direction='row'>
-                    {tasks.map(task => <Task {...task} key={task._id} />)}
+                    {userProjects.map(project => <Task {...project} key={project._id} />)}
                 </Flex>
         </Box>
     )

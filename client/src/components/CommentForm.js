@@ -1,16 +1,11 @@
 import React, { useState } from 'react'
 import {
-    Flex,
     Box,
     FormControl,
     FormLabel,
     Input,
-    Stack,
     Button,
-    Heading,
     HStack,
-    Textarea,
-    useColorModeValue,
   } from '@chakra-ui/react';
 
 const initInputs = {
