@@ -21,7 +21,7 @@ function ProjectProvider(props){
     const [userState, setUserState] = useState(initState)
     const [allProjects, setAllProjects] = useState([])
     const [project, setProject] = useState()
-    const [userProjects, setUserProjects] = useState()
+    const [userProjects, setUserProjects] = useState([])
 
     function getAllUserProjects() {
         userAxios.get("/api/project")
@@ -31,7 +31,12 @@ function ProjectProvider(props){
 
     function getUserProjects() {
         userAxios.get('/api/project/user')
-            .then(res => setUserProjects(res.data))
+            .then(res => {
+                setUserState(prevState => ({
+                    ...prevState,
+                    projects: res.data
+                }))
+            })
             .catch(err => console.log(err))
     }
 
@@ -82,8 +87,7 @@ function ProjectProvider(props){
                 editUserProject,
                 deleteUserProject,
                 allProjects,
-                userProjects,
-                project,
+                userProjects
             }}
         >
             {props.children}

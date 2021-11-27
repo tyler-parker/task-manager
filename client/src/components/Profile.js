@@ -23,12 +23,19 @@ export default function Profile() {
 
     const {
         getUserProjects,
-        userProjects
+        userProjects,
+        projects,
+        getAllUserProjects,
+        allProjects
     } = useContext(ProjectContext)
 
     useEffect(() => {
         getUserProjects()
-        console.log(userProjects);
+        getAllUserProjects()
+        getUserTasks()
+        console.log(allProjects)
+        console.log(projects);
+        console.log(tasks)
     }, [])
 
 
@@ -40,7 +47,7 @@ export default function Profile() {
                     <Heading size='xl' >Your Tasks</Heading>
                 </Container>
                 <Flex direction='row'>
-                    {userProjects.map(project => <Task {...project} key={project._id} />)}
+                    {projects.map(project => <Task {...project} key={project._id} />)}
                 </Flex>
         </Box>
     )
