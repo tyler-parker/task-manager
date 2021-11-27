@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react"
-import faker from 'faker'
+import React, { useState } from "react"
 import {
     Box,
     VStack,

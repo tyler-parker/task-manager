@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import User from './User.js'
 import axios from "axios"
 import {
-  Center,
   Heading,
   Stack,
   Box
