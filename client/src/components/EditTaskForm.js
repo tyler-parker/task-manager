@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react"
 import { UserContext } from "../context/UserProvider.js"
+import { ProjectContext } from '../context/ProjectProvider'
 import {
     Flex,
     Box,
@@ -24,6 +25,7 @@ export default function EditForm(props) {
     }
     const [inputs, setInputs] = useState(initInputs)
     const { editUserTask } = useContext(UserContext)
+    const { editUserProject } =useContext(ProjectContext)
     const { setEditToggle, _id, priority } = props
     const statusOptions = ['Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
 
@@ -38,16 +40,16 @@ export default function EditForm(props) {
 
     function handleSubmit(e) {
         e.preventDefault()
-        editUserTask(inputs, _id)
+        editUserProject(inputs, _id)
         setEditToggle(prevState => !prevState)
     }
 
 
-    const { title, description, imgUrl } = inputs
+    const { title, description } = inputs
 
     return (
         <Flex align={'center'} justify={'center'}>
-            <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+            <Stack spacing={8} mx={'auto'} maxW={'xl'} py={12} px={6}>
                 <Stack align={'center'}>
                     <Heading fontSize={'2xl'}>Edit Task</Heading>
                 </Stack>
@@ -56,7 +58,7 @@ export default function EditForm(props) {
                     bg={useColorModeValue('white', 'gray.700')}
                     boxShadow={'lg'}
                     p={8}
-                    w='45vh'
+                    w='70vh'
                 >
                     <Stack spacing={4}>
                         <FormControl>

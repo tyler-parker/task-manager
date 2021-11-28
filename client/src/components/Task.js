@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react"
 import { UserContext } from "../context/UserProvider.js"
+import { ProjectContext } from "../context/ProjectProvider.js";
 import EditTaskForm from "./EditTaskForm.js"
 import {
   Box,
@@ -16,9 +17,10 @@ import {
 export default function Task(props) {
 
   const [show, setShow] = useState(false)
-  const { title, description, imgUrl, _id, userId } = props
+  const { title, description, _id, userId } = props
   const [editToggle, setEditToggle] = useState(false)
   const { addUserTask, deleteUserTask } = useContext(UserContext)
+  const { deleteUserProject } = useContext(ProjectContext)
 
   const handleToggle = () => setShow(!show)
 
@@ -30,7 +32,6 @@ export default function Task(props) {
         role={'group'}
         p={6}
         m={6}
-        w={'90%'}
         boxShadow={'2xl'}
         rounded={'lg'}
         alignSelf='center'
@@ -44,12 +45,12 @@ export default function Task(props) {
             </Heading>
             <Stack mt={2}>
               <Box as='button'>
-                  <Collapse 
-                    onClick={handleToggle} 
-                    wordBreak 
-                    fontWeight={600} 
+                  <Collapse
+                    onClick={handleToggle}
+                    wordBreak
+                    fontWeight={600}
                     fontSize={'lg'}
-                    startingHeight={20} 
+                    startingHeight={20}
                     in={show}
                     >
                     { description }
@@ -57,19 +58,19 @@ export default function Task(props) {
               </Box>
               <HStack align='center' justify='center' spacing={5} pt={5}>
                 <Button
-                  variant='outline' 
-                  colorScheme='teal' 
+                  variant='outline'
+                  colorScheme='teal'
                   size='md'
                   onClick={() => setEditToggle(prevState => !prevState)}
                 >
                   Edit Task
                 </Button>
 
-                <Button 
-                  onClick={() => deleteUserTask(_id)}
-                  variant='outline' 
-                  colorScheme='red' 
-                  size='md' 
+                <Button
+                  onClick={() => deleteUserProject(_id)}
+                  variant='outline'
+                  colorScheme='red'
+                  size='md'
                 >
                   Delete Task
                 </Button>
@@ -79,12 +80,12 @@ export default function Task(props) {
           </Stack>
         </Box>
           :
-            <EditTaskForm 
-              _id={_id} 
-              deleteUserTask={deleteUserTask} 
+            <EditTaskForm
+              _id={_id}
+              deleteUserTask={deleteUserTask}
               {...props}
-              setEditToggle={setEditToggle} 
-              addUserTask={addUserTask} 
+              setEditToggle={setEditToggle}
+              addUserTask={addUserTask}
             />
       }
     </>

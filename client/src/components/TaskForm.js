@@ -13,8 +13,10 @@ import {
     RadioGroup,
     Textarea,
     useColorModeValue,
+    extendTheme,
     Select
   } from '@chakra-ui/react';
+  import { createBreakpoints } from '@chakra-ui/theme-tools'
 
 const initInputs = {
     title:"",
@@ -29,23 +31,18 @@ export default function TaskForm(props){
     const [statusSelect, setStatusSelect] = useState('')
     const {title, description, priority, status} = inputs
     const { addUserTask, addUserProject } = props
-    const statusOptions = ['Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
+    const statusOptions = ['', 'Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
     const priorities = ['Low', 'Normal', 'High']
 
-function handleChange(e){
-    const {name, value} = e.target
-    setInputs(prevInputs => ({
-        ...prevInputs,
-        [name]: value
-    }))
-    console.log(inputs)
-}
 
-    const handleSelect = (e) => {
-        console.log(e)
-        setStatusSelect(e)
-        console.log(statusSelect);
-        setInputs()
+
+    function handleChange(e){
+        const {name, value} = e.target
+        setInputs(prevInputs => ({
+            ...prevInputs,
+            [name]: value
+        }))
+        console.log(inputs)
     }
 
     function handleSubmit(e){
@@ -56,10 +53,12 @@ function handleChange(e){
 
     return(
         <Flex
-            align={'center'}
-            justify={'center'}
+            align='center'
+            justify='center'
+            position={{sm: 'relative', md: 'relative', lg: 'relative', xl: 'fixed'}}
+            p={6}
         >
-        <Stack spacing={8} mx={'auto'} maxW={'xl'} py={12} px={6} align='center'>
+        <Stack spacing={8} py={12} px={6} align='center'>
             <Stack align={'center'}>
                 <Heading fontSize={'4xl'}>Create A Project</Heading>
             </Stack>
@@ -68,8 +67,9 @@ function handleChange(e){
             bg={useColorModeValue('white', 'gray.700')}
             boxShadow={'lg'}
             p={8}
-            w='60vh'>
-                <Stack spacing={4}>
+            w='xl'
+            >
+                <Stack spacing={4} w='full'>
                     <FormControl>
                         <FormLabel>Title</FormLabel>
                             <Input
@@ -94,14 +94,14 @@ function handleChange(e){
                             </Select>
                         </Stack>
                         <RadioGroup>
-                            <FormLabel>Priority</FormLabel>
+                            {/* <FormLabel>Priority</FormLabel> */}
                             <Stack spacing={5} direction='row'>
-                            {
-                                priorities.map(priority => 
-                                <Radio name='priority' value={priority}>
-                                    {priority}
-                                </Radio>)
-                            }
+                                {
+                                    priorities.map(priorityVal =>                                 
+                                    <Radio onChange={handleChange} name='priority' value={priorityVal}>
+                                        {priorityVal}
+                                    </Radio>)
+                                }
                             </Stack>
                         </RadioGroup>
                     <FormControl>
