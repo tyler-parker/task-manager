@@ -23,9 +23,9 @@ export default function Profile() {
 
     const {
         getUserProjects,
-        userProjects,
-        projects,
         getAllUserProjects,
+        addUserProject,
+        projects,
         allProjects
     } = useContext(ProjectContext)
 
@@ -41,10 +41,10 @@ export default function Profile() {
 
     return (
         <Box w='full' justify='center' align='center'>
-            <TaskForm addUserTask={addUserTask} />
+            <TaskForm addUserTask={addUserProject} />
                 <Divider />
                 <Container justify='center' align='center' m={5}>
-                    <Heading size='xl' >Your Tasks</Heading>
+                    <Heading size='xl' >Your Projects</Heading>
                 </Container>
                 <Flex direction='row'>
                     {projects.map(project => <Task {...project} key={project._id} />)}

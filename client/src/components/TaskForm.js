@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import { Link } from 'react-router-dom'
+import { AiOutlineCaretDown } from 'react-icons/ai'
 import {
     Flex,
     Box,
@@ -9,37 +9,48 @@ import {
     Stack,
     Button,
     Heading,
-    Text,
+    Radio,
+    RadioGroup,
     Textarea,
     useColorModeValue,
+    Select
   } from '@chakra-ui/react';
 
 const initInputs = {
     title:"",
     description:"",
-    imgUrl:"",
     priority: "",
-    status: "Backlogged"
+    status: ""
 }
 
 export default function TaskForm(props){
 
     const [inputs, setInputs] = useState(initInputs)
+    const [statusSelect, setStatusSelect] = useState('')
     const {title, description, priority, status} = inputs
-    const { addUserTask } = props
+    const { addUserTask, addUserProject } = props
     const statusOptions = ['Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
+    const priorities = ['Low', 'Normal', 'High']
 
-    function handleChange(e){
-        const {name, value} = e.target
-        setInputs(prevInputs => ({
-            ...prevInputs,
-            [name]: value
-        }))
+function handleChange(e){
+    const {name, value} = e.target
+    setInputs(prevInputs => ({
+        ...prevInputs,
+        [name]: value
+    }))
+    console.log(inputs)
+}
+
+    const handleSelect = (e) => {
+        console.log(e)
+        setStatusSelect(e)
+        console.log(statusSelect);
+        setInputs()
     }
 
     function handleSubmit(e){
         e.preventDefault()
-        addUserTask(inputs)
+        addUserProject(inputs)
         setInputs(initInputs)
     }
 
@@ -48,16 +59,16 @@ export default function TaskForm(props){
             align={'center'}
             justify={'center'}
         >
-        <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+        <Stack spacing={8} mx={'auto'} maxW={'xl'} py={12} px={6} align='center'>
             <Stack align={'center'}>
-                <Heading fontSize={'4xl'}>Create A Task</Heading>
+                <Heading fontSize={'4xl'}>Create A Project</Heading>
             </Stack>
             <Box
             rounded={'lg'}
             bg={useColorModeValue('white', 'gray.700')}
             boxShadow={'lg'}
             p={8}
-            w='45vh'>
+            w='60vh'>
                 <Stack spacing={4}>
                     <FormControl>
                         <FormLabel>Title</FormLabel>
@@ -68,15 +79,31 @@ export default function TaskForm(props){
                                 value={title}
                             />
                     </FormControl>
-                    <FormControl>
-                        <FormLabel>Priority</FormLabel>
-                            <Input
-                                onChange={handleChange} 
-                                type="text" 
-                                name="priority"
-                                value={priority}
-                            />
-                    </FormControl>
+                        <Stack m={4}>
+                            <FormLabel>Status</FormLabel>
+                            <Select name='status' value={status} onChange={handleChange}>
+                                {
+                                    statusOptions.map(statusOption => 
+                                    <option 
+                                        key={statusOption} 
+                                        eventKey={statusOption}
+                                    > 
+                                        {statusOption} 
+                                    </option>)
+                                }
+                            </Select>
+                        </Stack>
+                        <RadioGroup>
+                            <FormLabel>Priority</FormLabel>
+                            <Stack spacing={5} direction='row'>
+                            {
+                                priorities.map(priority => 
+                                <Radio name='priority' value={priority}>
+                                    {priority}
+                                </Radio>)
+                            }
+                            </Stack>
+                        </RadioGroup>
                     <FormControl>
                         <FormLabel>Description</FormLabel>
                             <Textarea
