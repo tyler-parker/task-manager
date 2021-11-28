@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react"
 import { UserContext } from "../context/UserProvider.js"
 import { ProjectContext } from "../context/ProjectProvider.js";
 import EditTaskForm from "./EditTaskForm.js"
-import { BsChevronDoubleDown } from 'react-icons/bs'
+import { BsChevronDoubleDown,BsChevronDoubleUp } from 'react-icons/bs'
 import {
   Box,
   IconButton,
@@ -10,8 +10,8 @@ import {
   Heading,
   Text,
   Stack,
-  Container,
-  Collapse,
+  Flex,
+  Divider,
   HStack
 } from '@chakra-ui/react';
 
@@ -36,7 +36,6 @@ export default function Task(props) {
         m={6}
         boxShadow={'2xl'}
         rounded={'lg'}
-        alignSelf='center'
         w={{sm: 'sm', md: 'xl', lg: '2xl', xl: 'xl'}}
         // h={{sm: 'sm', md: 'md', lg: 'md', xl: 'xs'}}
         >
@@ -69,11 +68,20 @@ export default function Task(props) {
             !showMore ?
             <Stack>
               <Text>Show Tasks</Text>
-              <IconButton p={6} variant='ghost' icon={<BsChevronDoubleDown />} /> 
+              <IconButton p={6} onClick={() => setShowMore(prevState => !prevState)} icon={<BsChevronDoubleDown />} /> 
             </Stack>
             :
-            <>
-            </>
+            <Stack>
+              {tasks.map(task => 
+                <Box align='left' p={5}>
+                  <Box pb={2}>
+                    {task.title}
+                  </Box>
+                  <Divider />
+                </Box>)
+              } 
+              <IconButton p={6} onClick={() => setShowMore(prevState => !prevState)} icon={<BsChevronDoubleUp />} />
+            </Stack>
           }
         </Box>
           :
