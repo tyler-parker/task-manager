@@ -16,6 +16,7 @@ function ProjectProvider(props){
         token: localStorage.getItem('token') || "",
         projects: [],
         currentProject: [],
+        projectTasks: [],
         errMsg: ""
     }
 
@@ -50,6 +51,17 @@ function ProjectProvider(props){
                 }))
             })
             .catch(err => console.log(err))
+    }
+
+    function getProjectTasks(projectId) {
+        userAxios.get(`/api/task/project/${projectId}`)
+        .then(res => {
+            setUserState(prevState => ({
+                ...prevState,
+                projectTasks: res.data
+            }))
+        })
+        .catch(err => console.log(err))
     }
 
     function addUserProject(newProject) {
@@ -92,6 +104,7 @@ function ProjectProvider(props){
                 addUserProject,
                 editUserProject,
                 deleteUserProject,
+                getProjectTasks,
                 project,
                 allProjects,
                 userProjects

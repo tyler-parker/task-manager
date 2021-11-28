@@ -7,15 +7,18 @@ export default function Project(props) {
 
     const {
         getUserProject,
-        currentProject
+        currentProject,
+        getProjectTasks,
+        projectTasks
     } = useContext(ProjectContext)
 
     const { projectId } = useParams()
 
     useEffect(() => {
-        console.log(currentProject)
         getUserProject(projectId)
-
+        getProjectTasks(projectId)
+        console.log(currentProject)
+        console.log(projectTasks)
     }, [])
 
     return (
