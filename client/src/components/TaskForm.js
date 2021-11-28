@@ -67,7 +67,7 @@ export default function TaskForm(props){
             bg={useColorModeValue('white', 'gray.700')}
             boxShadow={'lg'}
             p={8}
-            w='xl'
+            w={{sm: 'sm', md: 'md', lg: 'lg', xl: 'xl'}}
             >
                 <Stack spacing={4} w='full'>
                     <FormControl>

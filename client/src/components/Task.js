@@ -2,9 +2,10 @@ import React, { useState, useContext } from "react"
 import { UserContext } from "../context/UserProvider.js"
 import { ProjectContext } from "../context/ProjectProvider.js";
 import EditTaskForm from "./EditTaskForm.js"
+import { BsChevronDoubleDown } from 'react-icons/bs'
 import {
   Box,
-  Center,
+  IconButton,
   Button,
   Heading,
   Text,
@@ -17,9 +18,10 @@ import {
 export default function Task(props) {
 
   const [show, setShow] = useState(false)
-  const { title, description, _id, userId } = props
+  const { title, _id } = props
   const [editToggle, setEditToggle] = useState(false)
-  const { addUserTask, deleteUserTask } = useContext(UserContext)
+  const [showMore, setShowMore] = useState(false)
+  const { deleteUserTask, tasks } = useContext(UserContext)
   const { deleteUserProject } = useContext(ProjectContext)
 
   const handleToggle = () => setShow(!show)
@@ -35,27 +37,13 @@ export default function Task(props) {
         boxShadow={'2xl'}
         rounded={'lg'}
         alignSelf='center'
+        w={{sm: 'sm', md: 'xl', lg: '2xl', xl: 'xl'}}
+        // h={{sm: 'sm', md: 'md', lg: 'md', xl: 'xs'}}
         >
-          <Stack pt={10} align={'center'}>
-            <Text color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'}>
-              { userId }
-            </Text>
+          <Stack m={6} pt={10} align={'center'}>
             <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
               { title }
             </Heading>
-            <Stack mt={2}>
-              <Box as='button'>
-                  <Collapse
-                    onClick={handleToggle}
-                    wordBreak
-                    fontWeight={600}
-                    fontSize={'lg'}
-                    startingHeight={20}
-                    in={show}
-                    >
-                    { description }
-                  </Collapse>
-              </Box>
               <HStack align='center' justify='center' spacing={5} pt={5}>
                 <Button
                   variant='outline'
@@ -76,8 +64,17 @@ export default function Task(props) {
                 </Button>
 
               </HStack>
-            </Stack>
           </Stack>
+          {
+            !showMore ?
+            <Stack>
+              <Text>Show Tasks</Text>
+              <IconButton p={6} variant='ghost' icon={<BsChevronDoubleDown />} /> 
+            </Stack>
+            :
+            <>
+            </>
+          }
         </Box>
           :
             <EditTaskForm
@@ -85,7 +82,6 @@ export default function Task(props) {
               deleteUserTask={deleteUserTask}
               {...props}
               setEditToggle={setEditToggle}
-              addUserTask={addUserTask}
             />
       }
     </>
