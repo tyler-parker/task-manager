@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import { Link } from 'react-router-dom'
+import { AiOutlineCaretDown } from 'react-icons/ai'
 import {
     Flex,
     Box,
@@ -9,25 +9,32 @@ import {
     Stack,
     Button,
     Heading,
-    Text,
+    Radio,
+    RadioGroup,
     Textarea,
     useColorModeValue,
+    extendTheme,
+    Select
   } from '@chakra-ui/react';
+  import { createBreakpoints } from '@chakra-ui/theme-tools'
 
 const initInputs = {
     title:"",
     description:"",
-    imgUrl:"",
     priority: "",
-    status: "Backlogged"
+    status: ""
 }
 
 export default function TaskForm(props){
 
     const [inputs, setInputs] = useState(initInputs)
+    const [statusSelect, setStatusSelect] = useState('')
     const {title, description, priority, status} = inputs
-    const { addUserTask } = props
-    const statusOptions = ['Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
+    const { addUserTask, addUserProject } = props
+    const statusOptions = ['', 'Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
+    const priorities = ['Low', 'Normal', 'High']
+
+
 
     function handleChange(e){
         const {name, value} = e.target
@@ -35,30 +42,34 @@ export default function TaskForm(props){
             ...prevInputs,
             [name]: value
         }))
+        console.log(inputs)
     }
 
     function handleSubmit(e){
         e.preventDefault()
-        addUserTask(inputs)
+        addUserProject(inputs)
         setInputs(initInputs)
     }
 
     return(
         <Flex
-            align={'center'}
-            justify={'center'}
+            align='center'
+            justify='center'
+            position={{sm: 'relative', md: 'relative', lg: 'relative', xl: 'fixed'}}
+            p={6}
         >
-        <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+        <Stack spacing={8} py={12} px={6} align='center'>
             <Stack align={'center'}>
-                <Heading fontSize={'4xl'}>Create A Task</Heading>
+                <Heading fontSize={'4xl'}>Create A Project</Heading>
             </Stack>
             <Box
             rounded={'lg'}
             bg={useColorModeValue('white', 'gray.700')}
             boxShadow={'lg'}
             p={8}
-            w='45vh'>
-                <Stack spacing={4}>
+            w={{sm: 'sm', md: 'md', lg: 'lg', xl: 'xl'}}
+            >
+                <Stack spacing={4} w='full'>
                     <FormControl>
                         <FormLabel>Title</FormLabel>
                             <Input
@@ -68,15 +79,31 @@ export default function TaskForm(props){
                                 value={title}
                             />
                     </FormControl>
-                    <FormControl>
-                        <FormLabel>Priority</FormLabel>
-                            <Input
-                                onChange={handleChange} 
-                                type="text" 
-                                name="priority"
-                                value={priority}
-                            />
-                    </FormControl>
+                        <Stack m={4}>
+                            <FormLabel>Status</FormLabel>
+                            <Select name='status' value={status} onChange={handleChange}>
+                                {
+                                    statusOptions.map(statusOption => 
+                                    <option 
+                                        key={statusOption} 
+                                        eventKey={statusOption}
+                                    > 
+                                        {statusOption} 
+                                    </option>)
+                                }
+                            </Select>
+                        </Stack>
+                        <RadioGroup>
+                            {/* <FormLabel>Priority</FormLabel> */}
+                            <Stack spacing={5} direction='row'>
+                                {
+                                    priorities.map(priorityVal =>                                 
+                                    <Radio onChange={handleChange} name='priority' value={priorityVal}>
+                                        {priorityVal}
+                                    </Radio>)
+                                }
+                            </Stack>
+                        </RadioGroup>
                     <FormControl>
                         <FormLabel>Description</FormLabel>
                             <Textarea

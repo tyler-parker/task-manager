@@ -1,26 +1,28 @@
 import React, { useState, useContext } from "react"
 import { UserContext } from "../context/UserProvider.js"
+import { ProjectContext } from "../context/ProjectProvider.js";
 import EditTaskForm from "./EditTaskForm.js"
+import { BsChevronDoubleDown,BsChevronDoubleUp } from 'react-icons/bs'
 import {
   Box,
-  Center,
+  IconButton,
   Button,
   Heading,
   Text,
   Stack,
-  Container,
-  Collapse,
+  useColorModeValue,
+  Divider,
   HStack
 } from '@chakra-ui/react';
 
 export default function Task(props) {
 
-  const [show, setShow] = useState(false)
-  const { title, description, imgUrl, _id, userId } = props
+  const { title, _id } = props
   const [editToggle, setEditToggle] = useState(false)
-  const { addUserTask, deleteUserTask } = useContext(UserContext)
-
-  const handleToggle = () => setShow(!show)
+  const [showMore, setShowMore] = useState(false)
+  const { deleteUserTask, tasks } = useContext(UserContext)
+  const { deleteUserProject } = useContext(ProjectContext)
+  const boxShadow = useColorModeValue('lg', '2xl')
 
   return (
     <>
@@ -30,61 +32,61 @@ export default function Task(props) {
         role={'group'}
         p={6}
         m={6}
-        w={'90%'}
-        boxShadow={'2xl'}
+        boxShadow={boxShadow}
         rounded={'lg'}
-        alignSelf='center'
+        w={{sm: 'sm', md: 'xl', lg: '2xl', xl: 'xl'}}
         >
-          <Stack pt={10} align={'center'}>
-            <Text color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'}>
-              { userId }
-            </Text>
+          <Stack m={6} pt={10} align={'center'}>
             <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
               { title }
             </Heading>
-            <Stack mt={2}>
-              <Box as='button'>
-                  <Collapse 
-                    onClick={handleToggle} 
-                    wordBreak 
-                    fontWeight={600} 
-                    fontSize={'lg'}
-                    startingHeight={20} 
-                    in={show}
-                    >
-                    { description }
-                  </Collapse>
-              </Box>
-              <HStack align='center' justify='center' spacing={5} pt={5}>
+              <HStack align='center' justify='center' spacing={4} pt={2}>
                 <Button
-                  variant='outline' 
-                  colorScheme='teal' 
-                  size='md'
+                  variant='outline'
+                  colorScheme='teal'
+                  size='sm'
                   onClick={() => setEditToggle(prevState => !prevState)}
                 >
-                  Edit Task
+                  Edit Project
                 </Button>
 
-                <Button 
-                  onClick={() => deleteUserTask(_id)}
-                  variant='outline' 
-                  colorScheme='red' 
-                  size='md' 
+                <Button
+                  onClick={() => deleteUserProject(_id)}
+                  variant='outline'
+                  colorScheme='red'
+                  size='sm'
                 >
-                  Delete Task
+                  Delete Project
                 </Button>
 
               </HStack>
-            </Stack>
           </Stack>
+          {
+            !showMore ?
+            <Stack>
+              <Text>Show Tasks</Text>
+              <IconButton p={6} onClick={() => setShowMore(prevState => !prevState)} icon={<BsChevronDoubleDown />} /> 
+            </Stack>
+            :
+            <Stack>
+              {tasks.map(task => 
+                <Box align='left' p={5}>
+                  <Box pb={2}>
+                    {task.title}
+                  </Box>
+                  <Divider />
+                </Box>)
+              } 
+              <IconButton p={6} onClick={() => setShowMore(prevState => !prevState)} icon={<BsChevronDoubleUp />} />
+            </Stack>
+          }
         </Box>
           :
-            <EditTaskForm 
-              _id={_id} 
-              deleteUserTask={deleteUserTask} 
+            <EditTaskForm
+              _id={_id}
+              deleteUserTask={deleteUserTask}
               {...props}
-              setEditToggle={setEditToggle} 
-              addUserTask={addUserTask} 
+              setEditToggle={setEditToggle}
             />
       }
     </>
