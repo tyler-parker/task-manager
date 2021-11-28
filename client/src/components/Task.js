@@ -10,21 +10,19 @@ import {
   Heading,
   Text,
   Stack,
-  Flex,
+  useColorModeValue,
   Divider,
   HStack
 } from '@chakra-ui/react';
 
 export default function Task(props) {
 
-  const [show, setShow] = useState(false)
   const { title, _id } = props
   const [editToggle, setEditToggle] = useState(false)
   const [showMore, setShowMore] = useState(false)
   const { deleteUserTask, tasks } = useContext(UserContext)
   const { deleteUserProject } = useContext(ProjectContext)
-
-  const handleToggle = () => setShow(!show)
+  const boxShadow = useColorModeValue('lg', '2xl')
 
   return (
     <>
@@ -34,32 +32,31 @@ export default function Task(props) {
         role={'group'}
         p={6}
         m={6}
-        boxShadow={'2xl'}
+        boxShadow={boxShadow}
         rounded={'lg'}
         w={{sm: 'sm', md: 'xl', lg: '2xl', xl: 'xl'}}
-        // h={{sm: 'sm', md: 'md', lg: 'md', xl: 'xs'}}
         >
           <Stack m={6} pt={10} align={'center'}>
             <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
               { title }
             </Heading>
-              <HStack align='center' justify='center' spacing={5} pt={5}>
+              <HStack align='center' justify='center' spacing={4} pt={2}>
                 <Button
                   variant='outline'
                   colorScheme='teal'
-                  size='md'
+                  size='sm'
                   onClick={() => setEditToggle(prevState => !prevState)}
                 >
-                  Edit Task
+                  Edit Project
                 </Button>
 
                 <Button
                   onClick={() => deleteUserProject(_id)}
                   variant='outline'
                   colorScheme='red'
-                  size='md'
+                  size='sm'
                 >
-                  Delete Task
+                  Delete Project
                 </Button>
 
               </HStack>

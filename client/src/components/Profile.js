@@ -45,8 +45,6 @@ export default function Profile() {
         getUserProjects()
         getAllUserProjects()
         getUserTasks()
-        console.log(projects);
-        console.log(tasks)
     }, [])
 
 

@@ -15,12 +15,13 @@ function ProjectProvider(props){
         user: JSON.parse(localStorage.getItem('user')) || {},
         token: localStorage.getItem('token') || "",
         projects: [],
+        currentProject: [],
         errMsg: ""
     }
 
     const [userState, setUserState] = useState(initState)
     const [allProjects, setAllProjects] = useState([])
-    const [project, setProject] = useState()
+    const [project, setProject] = useState({})
     const [userProjects, setUserProjects] = useState([])
 
     function getAllUserProjects() {
@@ -40,9 +41,14 @@ function ProjectProvider(props){
             .catch(err => console.log(err))
     }
 
-    function getUserProject() {
-        userAxios.get('/api/project/user/:projectId')
-            .then(res => setProject(res.data))
+    function getUserProject(projectId) {
+        userAxios.get(`/api/project/${projectId}`)
+            .then(res => {
+                setUserState(prevState => ({
+                    ...prevState,
+                    currentProject: res.data
+                }))
+            })
             .catch(err => console.log(err))
     }
 
@@ -86,6 +92,7 @@ function ProjectProvider(props){
                 addUserProject,
                 editUserProject,
                 deleteUserProject,
+                project,
                 allProjects,
                 userProjects
             }}
