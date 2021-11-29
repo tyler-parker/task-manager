@@ -58,7 +58,7 @@ export default function EditForm(props) {
                     bg={useColorModeValue('white', 'gray.700')}
                     boxShadow={'lg'}
                     p={8}
-                    w='70vh'
+                    w='md'
                 >
                     <Stack spacing={4}>
                         <FormControl>
@@ -96,7 +96,7 @@ export default function EditForm(props) {
                                 size='md'
                                 w='25%'
                             >
-                                Edit
+                                Submit
                             </Button>
                             <Button 
                                 onClick={() => setEditToggle(prevState => !prevState)}

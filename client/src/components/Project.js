@@ -1,5 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import Task from './Task'
+import ProjectTask from './ProjectTask'
 import { ProjectContext } from '../context/ProjectProvider'
 import { useParams } from 'react-router-dom'
 import { DndProvider } from 'react-dnd'
@@ -7,7 +8,10 @@ import { HTML5Backend } from 'react-dnd-html5-backend'
 import {
     Box,
     Text,
-    Divider
+    Divider,
+    Heading,
+    Grid,
+    Flex
 } from '@chakra-ui/react'
 
 export default function Project(props) {
@@ -30,14 +34,16 @@ export default function Project(props) {
 
     return (
         <>
-                <Box>
-                    <h1>{currentProject.title}</h1>
-                    <h2>{currentProject.description}</h2>
+                <Box m={6}>
+                    <Heading size='xl'>{currentProject.title}</Heading>
+                    <Heading size='large'>{currentProject.description}</Heading>
                 </Box>
                 <Divider />
-                {
-                    projectTasks.map(task => <Task {...task} key={task._id} />)
-                }
+                <Flex direction='column'>
+                    {
+                        projectTasks.map(task => <ProjectTask {...task} key={task._id} />)
+                    }
+                </Flex>
         </>
     )
 }

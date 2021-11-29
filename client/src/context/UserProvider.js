@@ -85,8 +85,8 @@ function UserProvider(props) {
             .catch(err => console.log(err))
     }
 
-    function addUserTask(newTask) {
-        userAxios.post('/api/task', newTask)
+    function addUserTask(newTask, projectId) {
+        userAxios.post(`/api/task/${projectId}`, newTask)
             .then(res => {
                 setUserState(prevState => ({
                     ...prevState,

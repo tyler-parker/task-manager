@@ -2,8 +2,10 @@ import React, { useState, useContext } from "react"
 import { UserContext } from "../context/UserProvider.js"
 import { ProjectContext } from "../context/ProjectProvider.js";
 import EditTaskForm from "./EditTaskForm.js"
-import { BsChevronDoubleDown,BsChevronDoubleUp } from 'react-icons/bs'
+import { BsChevronDoubleDown, BsChevronDoubleUp, } from 'react-icons/bs'
+import { AiFillEdit, AiFillDelete, AiOutlineUnorderedList } from 'react-icons/ai'
 import { useDrag } from 'react-dnd'
+import { Link } from 'react-router-dom'
 import {
   Box,
   IconButton,
@@ -24,6 +26,7 @@ export default function Task(props) {
   const { deleteUserTask, tasks } = useContext(UserContext)
   const { deleteUserProject } = useContext(ProjectContext)
   const boxShadow = useColorModeValue('lg', '2xl')
+  const bgColor = useColorModeValue('white', 'gray.700')
 
   const [{isDragging}, drag] = useDrag(() => ({
     type: 'task', 
@@ -42,31 +45,30 @@ export default function Task(props) {
         m={6}
         boxShadow={boxShadow}
         rounded={'lg'}
+        bg={bgColor}
         w={{sm: 'sm', md: 'xl', lg: '2xl', xl: 'xl'}}
         ref={drag}
         >
           <Stack m={6} pt={10} align={'center'}>
-            <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
-              { title }
-            </Heading>
+            <Link to={`project/${_id}`}>
+              <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
+                { title }
+              </Heading>
+            </Link>
               <HStack align='center' justify='center' spacing={4} pt={2}>
-                <Button
-                  variant='outline'
-                  colorScheme='teal'
-                  size='sm'
+                <IconButton
+                  variant='ghost'
+                  size='lg'
+                  icon={<AiFillEdit />}
                   onClick={() => setEditToggle(prevState => !prevState)}
-                >
-                  Edit Project
-                </Button>
+                />
 
-                <Button
+                <IconButton
+                  variant='ghost'
+                  size='lg'
+                  icon={<AiFillDelete />}
                   onClick={() => deleteUserProject(_id)}
-                  variant='outline'
-                  colorScheme='red'
-                  size='sm'
-                >
-                  Delete Project
-                </Button>
+                />
 
               </HStack>
           </Stack>

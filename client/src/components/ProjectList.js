@@ -9,9 +9,7 @@ export default function ProjectList(props) {
     return (
         <Box align='center' justify='center'>
                 {projects.map(project => 
-            <Link to={`project/${project._id}`}>
-                <Task {...project} key={project._id} />
-            </Link>
+                        <Task {...project} key={project._id} />
                 )}
         </Box>
     )
