@@ -1,5 +1,6 @@
-import React, {useState} from "react"
+import React, { useState, useContext } from "react"
 import { AiOutlineCaretDown } from 'react-icons/ai'
+import { UserContext } from "../context/UserProvider";
 import {
     Flex,
     Box,
@@ -13,10 +14,8 @@ import {
     RadioGroup,
     Textarea,
     useColorModeValue,
-    extendTheme,
     Select
   } from '@chakra-ui/react';
-  import { createBreakpoints } from '@chakra-ui/theme-tools'
 
 const initInputs = {
     title:"",
@@ -25,12 +24,13 @@ const initInputs = {
     status: ""
 }
 
-export default function TaskForm(props){
+export default function TaskModalForm(props){
 
     const [inputs, setInputs] = useState(initInputs)
-    const [statusSelect, setStatusSelect] = useState('')
-    const {title, description, priority, status} = inputs
-    const { addUserTask, addUserProject } = props
+    const {title, description, status} = inputs
+    const { addUserTask, projectId } = props
+    
+
     const statusOptions = ['Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
     const priorities = ['Low', 'Normal', 'High']
 
@@ -45,7 +45,7 @@ export default function TaskForm(props){
 
     function handleSubmit(e){
         e.preventDefault()
-        addUserTask(inputs, )
+        addUserTask(inputs, projectId)
         setInputs(initInputs)
     }
 
@@ -65,7 +65,7 @@ export default function TaskForm(props){
             bg={useColorModeValue('white', 'gray.700')}
             boxShadow={'lg'}
             p={8}
-            w={{sm: 'sm', md: 'md', lg: 'lg', xl: 'xl'}}
+            w={{sm: 'sm', md: 'lg', lg: 'xl', xl: 'xl'}}
             >
                 <Stack spacing={4} w='full'>
                     <FormControl>
@@ -92,7 +92,6 @@ export default function TaskForm(props){
                             </Select>
                         </Stack>
                         <RadioGroup>
-                            {/* <FormLabel>Priority</FormLabel> */}
                             <Stack spacing={5} direction='row'>
                                 {
                                     priorities.map(priorityVal =>                                 
