@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Task from './Task'
 import ProjectTask from './ProjectTask'
+import TaskModal from './TaskModal'
 import { ProjectContext } from '../context/ProjectProvider'
 import { useParams } from 'react-router-dom'
 import { useDrop } from 'react-dnd'
@@ -11,7 +11,6 @@ import {
     Heading,
     Grid,
     Flex,
-    Button
 } from '@chakra-ui/react'
 
 export default function Project(props) {
@@ -20,14 +19,16 @@ export default function Project(props) {
     const [board, setBoard] = useState([])
     const boardBg = useColorModeValue('gray.200', 'gray.600')
 
+
+    
     const [{isOver}, drop] = useDrop(() => ({
         accept: 'task',
         drop: (item) => addTaskToBoard(item.id),
         collect: (monitor) => ({
             isOver: !!monitor.isOver()
-          })
+        })
     }))
-
+    
     // adding a task to a board
     const addTaskToBoard = id => {
         console.log(id)
@@ -37,16 +38,16 @@ export default function Project(props) {
         console.log(taskList)
         console.log(drop)
     }
-
+    
     const {
         getUserProject,
-        currentProject,
         getProjectTasks,
+        currentProject,
         projectTasks
     } = useContext(ProjectContext)
-
+    
     const { projectId } = useParams()
-
+    
     useEffect(() => {
         getUserProject(projectId)
         getProjectTasks(projectId)
@@ -54,16 +55,26 @@ export default function Project(props) {
         console.log(projectTasks)
     }, [])
 
+    const formattedDate = new Date(currentProject.createdAt).toDateString()
+
     return (
         <>
-                <Grid gridTemplateColumns='1fr 1fr' m={6}>
+                <Grid gridTemplateColumns={{sm: '1fr',md: 'repeat(3, 1fr)', lg: 'repeat(3, 1fr)', xl: 'repeat(3, 1fr)'}} m={6}>
                     <Stack>
                         <Heading size='xl'>{currentProject.title}</Heading>
                         <Heading size='large'>{currentProject.description}</Heading>
                     </Stack>
-                    <Flex align='end' justify='start'>
-                        <Button size='lg' colorScheme='blue'>Create Task</Button>
+                    <Flex align='center' justify='center'>
+                        <TaskModal />
                     </Flex>
+                        <Flex direction='column' align='end'>
+                            <Heading fontSize={{sm: 'sm', md: 'sm', lg: 'md', xl: 'md'}}>
+                                Created by: {currentProject.username}
+                            </Heading>
+                            <Heading size='sm'>
+                                {formattedDate}
+                            </Heading>
+                        </Flex>
                 </Grid>
                 <Divider />
                 <Grid align='center' templateColumns={{sm: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)', xl: 'repeat(4, 1fr)'}} gap={6} m={4}>
