@@ -5,16 +5,18 @@ import { ProjectContext } from '../context/ProjectProvider'
 import { useParams } from 'react-router-dom'
 import { useDrop } from 'react-dnd'
 import {
-    Box,
+    Stack,
     useColorModeValue,
     Divider,
     Heading,
     Grid,
-    Flex
+    Flex,
+    Button
 } from '@chakra-ui/react'
 
 export default function Project(props) {
 
+    // Setting up the react-dnd system -- currently not working
     const [board, setBoard] = useState([])
     const boardBg = useColorModeValue('gray.200', 'gray.600')
 
@@ -26,6 +28,7 @@ export default function Project(props) {
           })
     }))
 
+    // adding a task to a board
     const addTaskToBoard = id => {
         console.log(id)
         console.log(board)
@@ -53,10 +56,15 @@ export default function Project(props) {
 
     return (
         <>
-                <Box m={6}>
-                    <Heading size='xl'>{currentProject.title}</Heading>
-                    <Heading size='large'>{currentProject.description}</Heading>
-                </Box>
+                <Grid gridTemplateColumns='1fr 1fr' m={6}>
+                    <Stack>
+                        <Heading size='xl'>{currentProject.title}</Heading>
+                        <Heading size='large'>{currentProject.description}</Heading>
+                    </Stack>
+                    <Flex align='end' justify='start'>
+                        <Button size='lg' colorScheme='blue'>Create Task</Button>
+                    </Flex>
+                </Grid>
                 <Divider />
                 <Grid align='center' templateColumns={{sm: '1fr', md: 'repeat(2, 1fr)', lg: 'repeat(4, 1fr)', xl: 'repeat(4, 1fr)'}} gap={6} m={4}>
                     <Flex ref={drop} bg={boardBg} direction='column' border='3px solid gray' borderRadius='20px' align='center'>
