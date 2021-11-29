@@ -33,15 +33,6 @@ export default function UserMenu(props) {
                   />
                 </MenuButton>
                 <MenuList alignItems={'center'}>
-                  <br />
-                  <Center>
-                    <Avatar
-                      size={'2xl'}
-                      name={username} 
-                    />
-                  </Center>
-                  <br />
-                  <MenuDivider />
                   <Link to='/profile'>
                     <MenuItem>
                       Profile

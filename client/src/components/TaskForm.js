@@ -31,10 +31,8 @@ export default function TaskForm(props){
     const [statusSelect, setStatusSelect] = useState('')
     const {title, description, priority, status} = inputs
     const { addUserTask, addUserProject } = props
-    const statusOptions = ['', 'Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
+    const statusOptions = ['Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
     const priorities = ['Low', 'Normal', 'High']
-
-
 
     function handleChange(e){
         const {name, value} = e.target
