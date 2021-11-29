@@ -8,6 +8,9 @@ import {
 
 export default function ProjectTask(props) {
     const boxShadow = useColorModeValue('lg', '2xl')
+    const lowColor = useColorModeValue('blue.300', 'blue.600')
+    const normalColor = useColorModeValue('yellow.300', 'yellow.600')
+    const highColor = useColorModeValue('red.300', 'red.600')
     const { title, priority, status } = props
     const [{isDragging}, drag] = useDrag(() => ({
         type: 'task', 
@@ -17,9 +20,9 @@ export default function ProjectTask(props) {
       }))
 
     const colorSwitcher = priority => {
-       return priority == 'Low' ? 'blue.300'
-            : priority == 'Normal' ? 'yellow.300'
-            : 'red.300';
+       return priority == 'Low' ? lowColor
+            : priority == 'Normal' ? normalColor
+            : highColor;
     }
 
     return (
