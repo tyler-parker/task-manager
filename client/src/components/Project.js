@@ -1,7 +1,14 @@
 import React, { useContext, useEffect } from 'react'
-import { UserContext } from '../context/UserProvider'
+import Task from './Task'
 import { ProjectContext } from '../context/ProjectProvider'
 import { useParams } from 'react-router-dom'
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
+import {
+    Box,
+    Text,
+    Divider
+} from '@chakra-ui/react'
 
 export default function Project(props) {
 
@@ -22,9 +29,15 @@ export default function Project(props) {
     }, [])
 
     return (
-        <div>
-            <h1>{currentProject.title}</h1>
-            <h2>{currentProject.description}</h2>
-        </div>
+        <>
+                <Box>
+                    <h1>{currentProject.title}</h1>
+                    <h2>{currentProject.description}</h2>
+                </Box>
+                <Divider />
+                {
+                    projectTasks.map(task => <Task {...task} key={task._id} />)
+                }
+        </>
     )
 }

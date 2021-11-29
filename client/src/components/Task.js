@@ -3,6 +3,7 @@ import { UserContext } from "../context/UserProvider.js"
 import { ProjectContext } from "../context/ProjectProvider.js";
 import EditTaskForm from "./EditTaskForm.js"
 import { BsChevronDoubleDown,BsChevronDoubleUp } from 'react-icons/bs'
+import { useDrag } from 'react-dnd'
 import {
   Box,
   IconButton,
@@ -24,6 +25,13 @@ export default function Task(props) {
   const { deleteUserProject } = useContext(ProjectContext)
   const boxShadow = useColorModeValue('lg', '2xl')
 
+  const [{isDragging}, drag] = useDrag(() => ({
+    type: 'task', 
+    collect: (monitor) => ({
+      isDragging: !!monitor.isDragging
+    }),
+  }))
+
   return (
     <>
       {
@@ -35,6 +43,7 @@ export default function Task(props) {
         boxShadow={boxShadow}
         rounded={'lg'}
         w={{sm: 'sm', md: 'xl', lg: '2xl', xl: 'xl'}}
+        ref={drag}
         >
           <Stack m={6} pt={10} align={'center'}>
             <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>

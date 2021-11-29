@@ -7,6 +7,8 @@ import Public from "./components/Public.js"
 import Project from "./components/Project.js";
 import ProtectedRoute from "./components/ProtectedRoute.js"
 import { UserContext } from "./context/UserProvider.js"
+import { DndProvider } from 'react-dnd'
+import { HTML5Backend } from 'react-dnd-html5-backend'
 
 
 export default function App() {
@@ -14,7 +16,7 @@ export default function App() {
     const { token, logout } = useContext(UserContext)
 
     return (
-        <>
+        <DndProvider backend={HTML5Backend}>
         <Navbar logout={logout} />
             <Switch>
                 <Route
@@ -40,7 +42,7 @@ export default function App() {
                     token={token}
                 />
             </Switch>
-        </>
+        </DndProvider>
     )
 }
 
