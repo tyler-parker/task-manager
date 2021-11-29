@@ -53,7 +53,7 @@ export default function Profile() {
                 <Flex direction='column'>
                     <TaskForm addUserProject={addUserProject} />
                 </Flex>
-                <Flex direction='column'>
+                <Flex>
                     <ProjectList projects={projects} />
                 </Flex>
             </Grid>
