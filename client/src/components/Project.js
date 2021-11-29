@@ -65,7 +65,7 @@ export default function Project(props) {
                         <Heading size='large'>{currentProject.description}</Heading>
                     </Stack>
                     <Flex align='center' justify='center'>
-                        <TaskModal />
+                        <TaskModal projectId={projectId} />
                     </Flex>
                         <Flex direction='column' align='end'>
                             <Heading fontSize={{sm: 'sm', md: 'sm', lg: 'md', xl: 'md'}}>

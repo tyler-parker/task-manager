@@ -5,13 +5,9 @@ import {
     Menu,
     MenuButton,
     MenuList,
-    Center,
     Avatar,
-    MenuDivider,
     MenuItem,
     Button,
-    Text,
-    Heading
 } from '@chakra-ui/react'
 
 export default function UserMenu(props) {
@@ -36,11 +32,6 @@ export default function UserMenu(props) {
                   <Link to='/profile'>
                     <MenuItem>
                       Profile
-                    </MenuItem>
-                  </Link>
-                  <Link to='/public'>
-                    <MenuItem>
-                      Public Tasks
                     </MenuItem>
                   </Link>
                   <Link to='/'>
