@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { UserContext } from '../context/UserProvider'
+import LoremIpsum from 'react-lorem-ipsum'
+import { AiFillEdit, AiFillDelete, AiOutlineUnorderedList } from 'react-icons/ai'
 import {
     Box,
     Flex,
@@ -8,13 +10,19 @@ import {
     useColorModeValue,
     Divider,
     Grid,
-    GridItem
+    GridItem,
+    Text,
+    IconButton,
+    Button,
+    Textarea,
+    Select
 } from '@chakra-ui/react'
 
 export default function TaskPage(props) {
     const { getUserTask, currentTask } = useContext(UserContext)
     const { title, description, username, createdAt, priority, status } = currentTask
     const { taskId } = useParams()
+    const userBgColor = useColorModeValue('gray.600', 'gray.300')
     const boxShadow = useColorModeValue('lg', '2xl')
     const bgColor = useColorModeValue('white', 'gray.700')
     const contentBgColor = useColorModeValue('gray.100', 'gray.900')
@@ -36,16 +44,24 @@ export default function TaskPage(props) {
                 rounded={'lg'}
                 bg={bgColor}
                 w={'90%'}
-                h='80vh'
             >
                 <Flex direction='column' align='center' justify='center'>
-                    <Heading>{title}</Heading>
+
+                    <Flex align='center' justify='space-around'>
+                        <Heading p={3}>{title}</Heading>
+                        <IconButton icon={<AiFillEdit />} size='sm' colorScheme='yellow' variant='outline'>Edit Task</IconButton>
+                    </Flex>
+                    <Flex w='full' justify='center' align='center' p={2}>
+                        <Text color={userBgColor}>
+                            Created by: {username}
+                        </Text>
+                    </Flex>
                     <Flex 
                         bgColor={contentBgColor} 
                         border='1px solid gray' 
                         borderRadius='5px' 
-                        w='75%' 
-                        h='70vh'
+                        w={{sm: '95%', md: '85%', lg: '75%', xl: "75%"}} 
+                        // h='70vh'
                     >
                         <Grid grid-templateRows='repeat(2, 1fr)' w='full'>
 
@@ -54,7 +70,18 @@ export default function TaskPage(props) {
                                 align='center' 
                                 justify='center'
                             >
-                                Box 1
+                                <Flex p={4} justify='end'>
+                                    <Select placeholder={status} w='30%'>
+
+                                    </Select>
+                                </Flex>
+
+                                <Flex w='80%' flexDirection='column' p={4}>
+                                    <Text fontSize='lg' justifyContent='space-around' align='start' p={2}>
+                                        {description}
+                                        <LoremIpsum />
+                                    </Text>
+                                </Flex>
                             </GridItem>
 
                             <GridItem 
@@ -62,11 +89,18 @@ export default function TaskPage(props) {
                                 justify='center' 
                             >
                                 <Divider />
-                                <Flex flexDirection='column' p={4}>
-                                    Box 2
+                                <Flex w='95%' flexDirection='column' p={4}>
+                                    <Textarea placeholder='Submit your comment here ...'>
+
+                                    </Textarea>
+                                </Flex>
+                                <Flex w='95%' justify='end' p={4}>
+                                    <Button size='sm'>
+                                        Submit Comment
+                                    </Button>
                                 </Flex>
                             </GridItem>
-                            
+
                         </Grid>
                     </Flex>
                 </Flex>
