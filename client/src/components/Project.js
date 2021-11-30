@@ -56,7 +56,7 @@ export default function Project(props) {
         getProjectTasks(projectId)
         console.log(currentProject)
         console.log(projectTasks)
-    }, [])
+    }, [projectTasks])
 
     const formattedDate = new Date(currentProject.createdAt).toDateString()
 
