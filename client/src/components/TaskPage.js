@@ -1,6 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { UserContext } from '../context/UserProvider'
+import { CommentContext } from '../context/CommentProvider'
 import LoremIpsum from 'react-lorem-ipsum'
 import { AiFillEdit, AiFillDelete, AiOutlineUnorderedList } from 'react-icons/ai'
 import {
@@ -15,13 +16,16 @@ import {
     IconButton,
     Button,
     Textarea,
-    Select
+    Select,
+    Avatar
 } from '@chakra-ui/react'
 
 export default function TaskPage(props) {
+    const { taskId } = useParams()
     const { getUserTask, currentTask } = useContext(UserContext)
     const { title, description, username, createdAt, priority, status } = currentTask
-    const { taskId } = useParams()
+    const { getAllComments, deleteComment, submitComment, comments, taskComment } = useContext(CommentContext)
+
     const userBgColor = useColorModeValue('gray.600', 'gray.300')
     const boxShadow = useColorModeValue('lg', '2xl')
     const bgColor = useColorModeValue('white', 'gray.700')
@@ -29,6 +33,8 @@ export default function TaskPage(props) {
 
     useEffect(() => {
         getUserTask(taskId)
+        getAllComments(taskId)
+        console.log(comments)
         console.log(taskId)
         console.log(currentTask)
         console.log(title)
@@ -61,7 +67,6 @@ export default function TaskPage(props) {
                         border='1px solid gray' 
                         borderRadius='5px' 
                         w={{sm: '95%', md: '85%', lg: '75%', xl: "75%"}} 
-                        // h='70vh'
                     >
                         <Grid grid-templateRows='repeat(2, 1fr)' w='full'>
 
@@ -69,6 +74,7 @@ export default function TaskPage(props) {
                                 rowSpan={2} 
                                 align='center' 
                                 justify='center'
+                                p={2}
                             >
                                 <Flex p={4} justify='end'>
                                     <Select placeholder={status} w='30%'>
@@ -82,13 +88,39 @@ export default function TaskPage(props) {
                                         <LoremIpsum />
                                     </Text>
                                 </Flex>
+                            <Divider />
                             </GridItem>
 
                             <GridItem 
                                 align='center' 
                                 justify='center' 
                             >
-                                <Divider />
+                            {
+                                comments.map(comment =>
+                                    <Flex align='start' justify='start' direction='column' p={4} w='95%'>
+                                        <Divider />
+                                        <Flex align='center' p={2}>
+                                            <Avatar size='sm' name={comment.username} />
+                                            <Text pl={4}>{comment.comment}</Text>
+                                        </Flex>
+                                            <Flex justify='end' align='end' w='95%'>
+                                                <IconButton 
+                                                    size='sm' 
+                                                    variant='outline' 
+                                                    colorScheme='yellow' 
+                                                    icon={<AiFillEdit />}
+                                                />
+                                                <IconButton
+                                                    ml={4} 
+                                                    size='sm' 
+                                                    variant='outline' 
+                                                    colorScheme='red' 
+                                                    icon={<AiFillDelete />}
+                                                />
+                                            </Flex>
+                                    </Flex> 
+                                )
+                            }
                                 <Flex w='95%' flexDirection='column' p={4}>
                                     <Textarea placeholder='Submit your comment here ...'>
 

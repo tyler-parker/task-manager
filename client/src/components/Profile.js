@@ -50,10 +50,10 @@ export default function Profile() {
 
     return (
             <Grid gridTemplateColumns={{sm: '1fr', md: '1fr', lg: '1fr', xl: 'repeat(2, 1fr)', '2xl': 'repeat(2, 1fr)'}}>
-                <Flex direction='column'>
+                <Flex direction='column' align='center'>
                     <TaskForm addUserProject={addUserProject} />
                 </Flex>
-                <Flex>
+                <Flex align='center' justify='center'>
                     <ProjectList projects={projects} />
                 </Flex>
             </Grid>
