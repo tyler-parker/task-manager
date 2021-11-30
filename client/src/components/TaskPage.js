@@ -7,7 +7,8 @@ import {
     Heading,
     useColorModeValue,
     Divider,
-    Grid
+    Grid,
+    GridItem
 } from '@chakra-ui/react'
 
 export default function TaskPage(props) {
@@ -39,8 +40,34 @@ export default function TaskPage(props) {
             >
                 <Flex direction='column' align='center' justify='center'>
                     <Heading>{title}</Heading>
-                    <Flex bgColor={contentBgColor} border='1px solid gray' borderRadius='5px' w='75%' h='70vh'>
+                    <Flex 
+                        bgColor={contentBgColor} 
+                        border='1px solid gray' 
+                        borderRadius='5px' 
+                        w='75%' 
+                        h='70vh'
+                    >
+                        <Grid grid-templateRows='repeat(2, 1fr)' w='full'>
 
+                            <GridItem 
+                                rowSpan={2} 
+                                align='center' 
+                                justify='center'
+                            >
+                                Box 1
+                            </GridItem>
+
+                            <GridItem 
+                                align='center' 
+                                justify='center' 
+                            >
+                                <Divider />
+                                <Flex flexDirection='column' p={4}>
+                                    Box 2
+                                </Flex>
+                            </GridItem>
+                            
+                        </Grid>
                     </Flex>
                 </Flex>
             </Box>
