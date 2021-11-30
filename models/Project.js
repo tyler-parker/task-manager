@@ -15,12 +15,21 @@ const projectSchema = new Schema({
         ref: "User",
         required: true
     },
+    username: {
+        type: String,
+        default: 'Old User',
+        required: true
+    },
     priority: {
         type: String
     },
     status: {
         type: String,
         required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 })
 
