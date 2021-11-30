@@ -39,9 +39,6 @@ export default function TaskPage(props) {
             >
                 <Flex direction='column' align='center' justify='center'>
                     <Heading>{title}</Heading>
-                    <Flex mt={4} w='75%'>
-                        <Divider />
-                    </Flex>
                     <Flex bgColor={contentBgColor} border='1px solid gray' borderRadius='5px' w='75%' h='70vh'>
 
                     </Flex>

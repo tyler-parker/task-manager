@@ -40,8 +40,8 @@ function CommentProvider(props) {
                 setComments(prevState => [...prevState, res.data])
             })
             .catch(err => console.log(err))
-        setTaskComment("")
-        getAllComments()
+            setTaskComment("")
+            getAllComments()
     }
 
     return (
