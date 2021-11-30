@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import ProjectTask from './ProjectTask'
 import TaskModal from './TaskModal'
 import { ProjectContext } from '../context/ProjectProvider'
+import { UserContext } from '../context/UserProvider'
 import { useParams } from 'react-router-dom'
 import { useDrop } from 'react-dnd'
 import {
@@ -18,8 +19,6 @@ export default function Project(props) {
     // Setting up the react-dnd system -- currently not working
     const [board, setBoard] = useState([])
     const boardBg = useColorModeValue('gray.200', 'gray.600')
-
-
     
     const [{isOver}, drop] = useDrop(() => ({
         accept: 'task',
@@ -45,6 +44,10 @@ export default function Project(props) {
         currentProject,
         projectTasks
     } = useContext(ProjectContext)
+
+    const {
+        addUserTask
+    } = useContext(UserContext)
     
     const { projectId } = useParams()
     
@@ -65,7 +68,7 @@ export default function Project(props) {
                         <Heading size='large'>{currentProject.description}</Heading>
                     </Stack>
                     <Flex align='center' justify='center'>
-                        <TaskModal projectId={projectId} />
+                        <TaskModal addUserTask={addUserTask} projectId={projectId} />
                     </Flex>
                         <Flex direction='column' align='end'>
                             <Heading fontSize={{sm: 'sm', md: 'sm', lg: 'md', xl: 'md'}}>

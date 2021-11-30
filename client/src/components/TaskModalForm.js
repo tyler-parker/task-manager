@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react"
-import { AiOutlineCaretDown } from 'react-icons/ai'
-import { UserContext } from "../context/UserProvider";
+import { useParams } from "react-router";
 import {
     Flex,
     Box,
@@ -21,7 +20,7 @@ const initInputs = {
     title:"",
     description:"",
     priority: "",
-    status: ""
+    status: "Backlogged"
 }
 
 export default function TaskModalForm(props){
@@ -29,7 +28,6 @@ export default function TaskModalForm(props){
     const [inputs, setInputs] = useState(initInputs)
     const {title, description, status} = inputs
     const { addUserTask, projectId } = props
-    
 
     const statusOptions = ['Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
     const priorities = ['Low', 'Normal', 'High']
@@ -47,25 +45,23 @@ export default function TaskModalForm(props){
         e.preventDefault()
         addUserTask(inputs, projectId)
         setInputs(initInputs)
+        console.log(projectId)
     }
 
     return(
         <Flex
             align='center'
             justify='center'
-            position={{sm: 'relative', md: 'relative', lg: 'relative', xl: 'fixed'}}
-            p={6}
         >
         <Stack spacing={8} py={12} px={6} align='center'>
             <Stack align={'center'}>
-                <Heading fontSize={'4xl'}>Create A Project</Heading>
+                <Heading fontSize={'4xl'}>Create A Task</Heading>
             </Stack>
             <Box
             rounded={'lg'}
             bg={useColorModeValue('white', 'gray.700')}
-            boxShadow={'lg'}
             p={8}
-            w={{sm: 'sm', md: 'lg', lg: 'xl', xl: 'xl'}}
+            w={'xl'}
             >
                 <Stack spacing={4} w='full'>
                     <FormControl>

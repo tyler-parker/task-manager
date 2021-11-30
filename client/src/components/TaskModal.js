@@ -1,5 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { LoremIpsum } from 'react-lorem-ipsum'
+import TaskModalForm from './TaskModalForm'
+import TaskForm from './TaskForm'
 import {
     useDisclosure,
     Modal,
@@ -9,11 +11,14 @@ import {
     ModalFooter,
     ModalBody,
     ModalCloseButton,
-    Button
+    Button,    
 } from '@chakra-ui/react'
 
-export default function TaskModal() {
+
+export default function TaskModal(props) {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    const { addUserTask, projectId } = props
+
     return (
         <>
             <Button onClick={onOpen} size='lg' colorScheme='blue'>Create Task</Button>
@@ -23,14 +28,13 @@ export default function TaskModal() {
                 <ModalHeader>Modal Title</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody>
-                    <LoremIpsum p={2} />
+                    <TaskModalForm addUserTask={addUserTask} projectId={projectId} />
                 </ModalBody>
 
                 <ModalFooter>
                     <Button colorScheme='blue' mr={3} onClick={onClose}>
                     Close
                     </Button>
-                    <Button variant='ghost'>Secondary Action</Button>
                 </ModalFooter>
                 </ModalContent>
             </Modal>
