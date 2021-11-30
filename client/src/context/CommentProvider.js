@@ -17,9 +17,8 @@ function CommentProvider(props) {
     const [comments, setComments] = useState([])
     const [taskComment, setTaskComment] = useState("")
 
-   
-    function getAllComments(_id) {
-        userAxios.get(`/api/comment`)
+    function getAllComments(taskId) {
+        userAxios.get(`/api/comment/${taskId}`)
         .then(res => {
             setComments(res.data)
             console.log(res.data)
