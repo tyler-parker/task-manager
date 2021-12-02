@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react"
-import Comment from "./Comment.js"
-import CommentForm from "./CommentForm.js"
+import Comment from "../comment/Comment.js"
+import CommentForm from "../comment/CommentForm.js"
 import axios from "axios"
 import {
     Box,
