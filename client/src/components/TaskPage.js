@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { UserContext } from '../context/UserProvider'
 import { CommentContext } from '../context/CommentProvider'
@@ -20,11 +20,15 @@ import {
     Avatar
 } from '@chakra-ui/react'
 
+const initInputs = { comment: '' }
+
 export default function TaskPage(props) {
     const { taskId } = useParams()
+
     const { getUserTask, currentTask } = useContext(UserContext)
     const { title, description, username, createdAt, priority, status } = currentTask
-    const { getAllComments, deleteComment, submitComment, comments, taskComment } = useContext(CommentContext)
+
+    const { getAllComments, deleteComment, submitComment, comments, taskComment, _id } = useContext(CommentContext)
 
     const userBgColor = useColorModeValue('gray.600', 'gray.300')
     const boxShadow = useColorModeValue('lg', '2xl')
@@ -33,12 +37,38 @@ export default function TaskPage(props) {
 
     useEffect(() => {
         getUserTask(taskId)
-        getAllComments(taskId)
         console.log(comments)
         console.log(taskId)
         console.log(currentTask)
-        console.log(title)
+    }, [taskId])
+
+    useEffect(() => {
+        getAllComments(taskId)
     }, [])
+
+    const [toggle, setToggle] = useState(false)
+    const [inputs, setInputs] = useState(initInputs)
+
+    const handleToggle = () => {setToggle(!toggle)}
+
+    function handleChange(e){
+        const {name, value} = e.target
+        setInputs(prevInputs => ({
+            ...prevInputs,
+            [name]: value
+        }))
+        console.log(inputs)
+    }
+
+    const { comment } = inputs
+
+    function handleSubmit(e){
+        e.preventDefault()
+        submitComment(inputs, taskId)
+        getAllComments(taskId)
+        setInputs(initInputs)
+        console.log(inputs)
+    }
 
     return (
         <Flex align='center' justify='center' >
@@ -96,38 +126,75 @@ export default function TaskPage(props) {
                                 justify='center' 
                             >
                             {
-                                comments.map(comment =>
+                                comments.map(commentObj =>
                                     <Flex align='start' justify='start' direction='column' p={4} w='95%'>
                                         <Divider />
-                                        <Flex align='center' p={2}>
-                                            <Avatar size='sm' name={comment.username} />
-                                            <Text pl={4}>{comment.comment}</Text>
-                                        </Flex>
+                                        { !toggle ? 
+                                        <>
+                                            <Flex align='center' p={2}>
+                                                <Avatar size='sm' name={commentObj.username} />
+                                                <Text pl={4}>{commentObj.comment}</Text>
+                                            </Flex>
                                             <Flex justify='end' align='end' w='95%'>
-                                                <IconButton 
-                                                    size='sm' 
-                                                    variant='outline' 
-                                                    colorScheme='yellow' 
-                                                    icon={<AiFillEdit />}
-                                                />
+
+                                                    <IconButton 
+                                                        size='sm' 
+                                                        variant='outline' 
+                                                        colorScheme='yellow' 
+                                                        icon={<AiFillEdit />}
+                                                        onClick={handleToggle}
+                                                        />
                                                 <IconButton
                                                     ml={4} 
                                                     size='sm' 
                                                     variant='outline' 
                                                     colorScheme='red' 
                                                     icon={<AiFillDelete />}
-                                                />
+                                                    onClick={() => deleteComment(commentObj._id)}
+                                                    />
                                             </Flex>
+                                        </>
+                                            :
+                                        <>
+                                            <Flex w='95%' flexDirection='column' p={4}>
+                                                {/* <Textarea
+                                                    onChange={handleChange} 
+                                                    name='comment' 
+                                                    value={inputs.comment} 
+                                                    placeholder={commentObj.comment} 
+                                                >
+
+                                                </Textarea> */}
+                                            </Flex>
+                                            <Flex w='95%' justify='end' >
+                                                <Button variant='outline' colorScheme='yellow' size='sm'>
+                                                    Submit Comment
+                                                </Button>
+                                                <Button
+                                                    ml={4} 
+                                                    onClick={handleToggle}  
+                                                    size='sm'
+                                                >
+                                                    Close
+                                                </Button>
+                                            </Flex>
+                                        </>
+                                        }
                                     </Flex> 
                                 )
                             }
                                 <Flex w='95%' flexDirection='column' p={4}>
-                                    <Textarea placeholder='Submit your comment here ...'>
+                                    <Textarea 
+                                        placeholder='Submit your comment here ...'
+                                        onChange={handleChange} 
+                                        name='comment' 
+                                        value={inputs.comment}
+                                    >
 
                                     </Textarea>
                                 </Flex>
                                 <Flex w='95%' justify='end' p={4}>
-                                    <Button size='sm'>
+                                    <Button onClick={handleSubmit} colorScheme='blue' size='md'>
                                         Submit Comment
                                     </Button>
                                 </Flex>
