@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { UserContext } from "../context/UserProvider.js"
+import { UserContext } from "../../context/UserProvider.js"
 import {
     Menu,
     MenuButton,

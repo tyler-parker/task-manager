@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { UserContext } from '../../context/UserProvider'
 import { CommentContext } from '../../context/CommentProvider'
+import EditForm from '../Task/EditTaskForm'
 import LoremIpsum from 'react-lorem-ipsum'
 import { AiFillEdit, AiFillDelete, AiOutlineUnorderedList } from 'react-icons/ai'
 import {
@@ -25,8 +26,8 @@ const initInputs = { comment: '' }
 export default function TaskPage(props) {
     const { taskId } = useParams()
 
-    const { getUserTask, currentTask } = useContext(UserContext)
-    const { title, description, username, createdAt, priority, status } = currentTask
+    const { getUserTask, currentTask, user: { username } } = useContext(UserContext)
+    const { title, description, createdAt, priority, status } = currentTask
 
     const { getAllComments, deleteComment, submitComment, comments, taskComment, _id } = useContext(CommentContext)
 
@@ -34,6 +35,17 @@ export default function TaskPage(props) {
     const boxShadow = useColorModeValue('lg', '2xl')
     const bgColor = useColorModeValue('white', 'gray.700')
     const contentBgColor = useColorModeValue('gray.100', 'gray.900')
+    const lowColor = useColorModeValue('blue.300', 'blue.600')
+    const normalColor = useColorModeValue('yellow.300', 'yellow.600')
+    const highColor = useColorModeValue('red.300', 'red.600')
+
+    const statusOptions = ['Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
+
+    const priorityColorSwitcher = priority => {
+        return priority == 'Low' ? lowColor
+             : priority == 'Normal' ? normalColor
+             : highColor;
+     }
 
     useEffect(() => {
         getUserTask(taskId)
@@ -47,9 +59,12 @@ export default function TaskPage(props) {
     }, [])
 
     const [toggle, setToggle] = useState(false)
+    const [taskToggle, setTaskToggle] = useState(false)
     const [inputs, setInputs] = useState(initInputs)
+    const { comment } = inputs
 
     const handleToggle = () => {setToggle(!toggle)}
+    const taskEditToggle = () => {setTaskToggle(!taskToggle)}
 
     function handleChange(e){
         const {name, value} = e.target
@@ -60,7 +75,6 @@ export default function TaskPage(props) {
         console.log(inputs)
     }
 
-    const { comment } = inputs
 
     function handleSubmit(e){
         e.preventDefault()
@@ -81,11 +95,20 @@ export default function TaskPage(props) {
                 bg={bgColor}
                 w={'90%'}
             >
-                <Flex direction='column' align='center' justify='center'>
+                { !taskToggle ?
+                    <>
+                    <Flex direction='column' align='center' justify='center'>
 
                     <Flex align='center' justify='space-around'>
+                        <Flex 
+                            bgColor={priorityColorSwitcher(priority)} 
+                            p={1} 
+                            borderRadius='5px'
+                            >
+                            {priority}
+                        </Flex>
                         <Heading p={3}>{title}</Heading>
-                        <IconButton icon={<AiFillEdit />} size='sm' colorScheme='yellow' variant='outline'>Edit Task</IconButton>
+                        <IconButton onClick={taskEditToggle} icon={<AiFillEdit />} size='sm' variant='outline' />
                     </Flex>
                     <Flex w='full' justify='center' align='center' p={2}>
                         <Text color={userBgColor}>
@@ -97,7 +120,7 @@ export default function TaskPage(props) {
                         border='1px solid gray' 
                         borderRadius='5px' 
                         w={{sm: '95%', md: '85%', lg: '75%', xl: "75%"}} 
-                    >
+                        >
                         <Grid grid-templateRows='repeat(2, 1fr)' w='full'>
 
                             <GridItem 
@@ -105,10 +128,10 @@ export default function TaskPage(props) {
                                 align='center' 
                                 justify='center'
                                 p={2}
-                            >
+                                >
                                 <Flex p={4} justify='end'>
                                     <Select placeholder={status} w='30%'>
-
+                                        {statusOptions.map(status => <option>{status}</option>)}
                                     </Select>
                                 </Flex>
 
@@ -124,7 +147,7 @@ export default function TaskPage(props) {
                             <GridItem 
                                 align='center' 
                                 justify='center' 
-                            >
+                                >
                             {
                                 comments.map(commentObj =>
                                     <Flex align='start' justify='start' direction='column' p={4} w='95%'>
@@ -156,14 +179,14 @@ export default function TaskPage(props) {
                                             :
                                         <>
                                             <Flex w='95%' flexDirection='column' p={4}>
-                                                {/* <Textarea
+                                                <Textarea
                                                     onChange={handleChange} 
                                                     name='comment' 
                                                     value={inputs.comment} 
                                                     placeholder={commentObj.comment} 
-                                                >
+                                                    >
 
-                                                </Textarea> */}
+                                                </Textarea>
                                             </Flex>
                                             <Flex w='95%' justify='end' >
                                                 <Button variant='outline' colorScheme='yellow' size='sm'>
@@ -173,7 +196,7 @@ export default function TaskPage(props) {
                                                     ml={4} 
                                                     onClick={handleToggle}  
                                                     size='sm'
-                                                >
+                                                    >
                                                     Close
                                                 </Button>
                                             </Flex>
@@ -188,7 +211,7 @@ export default function TaskPage(props) {
                                         onChange={handleChange} 
                                         name='comment' 
                                         value={comment}
-                                    >
+                                        >
 
                                     </Textarea>
                                 </Flex>
@@ -202,6 +225,13 @@ export default function TaskPage(props) {
                         </Grid>
                     </Flex>
                 </Flex>
+                </>
+                :
+                <EditForm 
+                    setEditToggle={taskEditToggle}
+                    isTask={true} 
+                />
+            }
             </Box>
         </Flex>
     )

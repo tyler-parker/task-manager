@@ -3,7 +3,7 @@ import TaskForm from '../Task/TaskForm.js'
 import Task from '../Task/Task'
 import { UserContext } from "../../context/UserProvider.js"
 import { ProjectContext } from '../../context/ProjectProvider'
-import ProjectList from '../projects/ProjectList'
+import ProjectList from '../Projects/ProjectList'
 import Split from 'react-split'
 import {
     Box,

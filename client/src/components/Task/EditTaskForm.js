@@ -13,6 +13,8 @@ import {
     HStack,
     Textarea,
     useColorModeValue,
+    RadioGroup,
+    Radio
   } from '@chakra-ui/react';
 
 export default function EditForm(props) {
@@ -26,8 +28,9 @@ export default function EditForm(props) {
     const [inputs, setInputs] = useState(initInputs)
     const { editUserTask } = useContext(UserContext)
     const { editUserProject } =useContext(ProjectContext)
-    const { setEditToggle, _id, priority } = props
+    const { setEditToggle, _id, isTask, isProject } = props
     const statusOptions = ['Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
+    const priorities = ['Low', 'Normal', 'High']
 
     function handleChange(e) {
         const { name, value } = e.target
@@ -35,7 +38,6 @@ export default function EditForm(props) {
             ...prevInputs,
             [name]: value
         }))
-
     }
 
     function handleSubmit(e) {
@@ -45,7 +47,7 @@ export default function EditForm(props) {
     }
 
 
-    const { title, description } = inputs
+    const { title, description, priority } = inputs
 
     return (
         <Flex align={'center'} justify={'center'}>
@@ -70,15 +72,16 @@ export default function EditForm(props) {
                                     value={title}
                                 />
                         </FormControl>
-                        <FormControl>
-                        <FormLabel>Priority</FormLabel>
-                            <Input
-                                onChange={handleChange} 
-                                type="text" 
-                                name="priority"
-                                value={priority}
-                            />
-                        </FormControl>
+                        <RadioGroup>
+                            <Stack spacing={5} direction='row'>
+                                {
+                                    priorities.map(priorityVal =>                                 
+                                    <Radio onChange={handleChange} name='priority' value={priorityVal}>
+                                        {priorityVal}
+                                    </Radio>)
+                                }
+                            </Stack>
+                        </RadioGroup>
                         <FormControl>
                             <FormLabel>Description</FormLabel>
                                 <Textarea

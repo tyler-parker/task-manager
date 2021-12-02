@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react"
 import Comment from "../comment/Comment.js"
 import CommentForm from "../comment/CommentForm.js"
+import { Link } from 'react-router-dom'
 import axios from "axios"
 import {
     Box,
@@ -80,9 +81,9 @@ export default function PublicTasks(props) {
                     <Text color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'}>
                     { userId }
                     </Text>
-                    <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
-                    { title }
-                    </Heading>
+                    <Link to={`/tasks/${_id}`}>
+                        <Heading size='lg'>{title}</Heading>
+                    </Link>
                     <Stack mt={2}>
                         <Box as='button'>
                             <Collapse 
