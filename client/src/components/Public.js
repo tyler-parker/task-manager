@@ -20,8 +20,8 @@ export default function Public() {
 
   useEffect(() => {
     userAxios.get("/api/users")
-    .then(res => setUsers(res.data))
-    .catch(err => console.log(err.response.data.errMsg))
+      .then(res => setUsers(res.data))
+      .catch(err => console.log(err.response.data.errMsg))
   }, [])
 
   return (

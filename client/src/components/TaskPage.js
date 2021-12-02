@@ -188,7 +188,7 @@ export default function TaskPage(props) {
                                         placeholder='Submit your comment here ...'
                                         onChange={handleChange} 
                                         name='comment' 
-                                        value={inputs.comment}
+                                        value={comment}
                                     >
 
                                     </Textarea>
