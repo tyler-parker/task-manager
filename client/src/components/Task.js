@@ -57,14 +57,16 @@ export default function Task(props) {
             </Link>
               <HStack align='center' justify='center' spacing={4} pt={2}>
                 <IconButton
-                  variant='ghost'
+                  variant='outline'
+                  colorScheme='yellow'
                   size='lg'
                   icon={<AiFillEdit />}
                   onClick={() => setEditToggle(prevState => !prevState)}
                 />
 
                 <IconButton
-                  variant='ghost'
+                  variant='outline'
+                  colorScheme='red'
                   size='lg'
                   icon={<AiFillDelete />}
                   onClick={() => deleteUserProject(_id)}

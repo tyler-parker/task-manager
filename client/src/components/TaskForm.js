@@ -16,7 +16,6 @@ import {
     extendTheme,
     Select
   } from '@chakra-ui/react';
-  import { createBreakpoints } from '@chakra-ui/theme-tools'
 
 const initInputs = {
     title:"",

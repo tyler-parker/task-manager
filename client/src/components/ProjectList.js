@@ -7,7 +7,7 @@ export default function ProjectList(props) {
     const { projects } = props
 
     return (
-        <Flex direction='column-reverse' align='center' justify='center'>
+        <Flex direction='column-reverse' alignSelf='center' justifySelf='center'>
                 {projects.map(project => 
                         <Task {...project} key={project._id} />
                 )}

@@ -16,6 +16,7 @@ function UserProvider(props) {
         token: localStorage.getItem('token') || "",
         tasks: [],
         comment: [],
+        currentTask: [],
         errMsg: ""
     }
 
@@ -58,6 +59,7 @@ function UserProvider(props) {
             user: {},
             token: "",
             tasks: [],
+            currentTask: [],
             comment: []
         })
     }
@@ -72,6 +74,17 @@ function UserProvider(props) {
         userAxios.get("/api/task")
             .then(res => setAllTasks(res.data))
             .catch(err => console.log(err.response.data.errMsg))
+    }
+
+    function getUserTask(taskId) {
+        userAxios.get(`/api/task/${taskId}`)
+            .then(res => {
+                setUserState(prevState => ({
+                    ...prevState,
+                    currentTask: res.data
+                }))
+            })
+            .catch(err => console.log(err))
     }
 
     function getUserTasks() {
@@ -125,6 +138,7 @@ function UserProvider(props) {
                 getAllUserTasks,
                 addUserTask,
                 getUserTasks,
+                getUserTask,
                 editUserTask,
                 deleteUserTask
             }}>
