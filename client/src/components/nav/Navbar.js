@@ -12,8 +12,8 @@ import {
   Text
 } from '@chakra-ui/react';
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
-import UserMenu from './UserMenu'
-import { UserContext } from "../context/UserProvider.js"
+import UserMenu from '../UserMenu'
+import { UserContext } from "../../context/UserProvider.js"
 
 export default function Navbar(props) {
 

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react"
-import { UserContext } from "../context/UserProvider.js"
-import { ProjectContext } from '../context/ProjectProvider'
+import { UserContext } from "../../context/UserProvider.js"
+import { ProjectContext } from '../../context/ProjectProvider'
 import {
     Flex,
     Box,

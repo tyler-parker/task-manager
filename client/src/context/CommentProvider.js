@@ -36,7 +36,7 @@ function CommentProvider(props) {
         userAxios.post(`/api/comment/${taskId}`, newComment)
             .then(res => setComments(prevState => prevState, res.data ))
             .catch(err => console.log(err))
-            // setTaskComment("")
+            setTaskComment("")
             getAllComments()
     }
 

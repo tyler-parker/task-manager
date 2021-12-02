@@ -1,5 +1,5 @@
 import React from 'react'
-import Task from './Task'
+import Task from '../Task/Task'
 import { Link } from 'react-router-dom'
 import { Box, Flex } from '@chakra-ui/react'
 

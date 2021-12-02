@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react"
-import { UserContext } from "../context/UserProvider.js"
-import { ProjectContext } from "../context/ProjectProvider.js";
+import { UserContext } from "../../context/UserProvider.js"
+import { ProjectContext } from "../../context/ProjectProvider.js";
 import EditTaskForm from "./EditTaskForm.js"
 import { BsChevronDoubleDown, BsChevronDoubleUp, } from 'react-icons/bs'
 import { AiFillEdit, AiFillDelete, AiOutlineUnorderedList } from 'react-icons/ai'

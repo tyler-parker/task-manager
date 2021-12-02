@@ -1,16 +1,15 @@
 import React, {useContext} from "react"
 import { Route, Switch, Redirect} from "react-router-dom";
-import Navbar from "./components/Navbar.js"
-import Auth from "./components/Auth.js"
-import Profile from "./components/Profile.js"
-import Public from "./components/Public.js"
-import Project from "./components/Project.js";
-import ProtectedRoute from "./components/ProtectedRoute.js"
-import TaskPage from "./components/TaskPage.js";
+import Navbar from "./components/nav/Navbar.js"
+import Auth from "./components/authentication/Auth.js"
+import Profile from "./components/pages/Profile.js"
+import Public from "./components/pages/Public.js"
+import Project from "./components/pages/ProjectPage.js";
+import ProtectedRoute from "./components/authentication/ProtectedRoute.js"
+import TaskPage from "./components/pages/TaskPage.js";
 import { UserContext } from "./context/UserProvider.js"
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-
 
 export default function App() {
 

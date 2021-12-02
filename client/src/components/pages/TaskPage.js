@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import { UserContext } from '../context/UserProvider'
-import { CommentContext } from '../context/CommentProvider'
+import { UserContext } from '../../context/UserProvider'
+import { CommentContext } from '../../context/CommentProvider'
 import LoremIpsum from 'react-lorem-ipsum'
 import { AiFillEdit, AiFillDelete, AiOutlineUnorderedList } from 'react-icons/ai'
 import {
@@ -136,14 +136,13 @@ export default function TaskPage(props) {
                                                 <Text pl={4}>{commentObj.comment}</Text>
                                             </Flex>
                                             <Flex justify='end' align='end' w='95%'>
-
-                                                    <IconButton 
-                                                        size='sm' 
-                                                        variant='outline' 
-                                                        colorScheme='yellow' 
-                                                        icon={<AiFillEdit />}
-                                                        onClick={handleToggle}
-                                                        />
+                                                <IconButton 
+                                                    size='sm' 
+                                                    variant='outline' 
+                                                    colorScheme='yellow' 
+                                                    icon={<AiFillEdit />}
+                                                    onClick={handleToggle}
+                                                    />
                                                 <IconButton
                                                     ml={4} 
                                                     size='sm' 

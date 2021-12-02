@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
-import ProjectTask from './ProjectTask'
-import TaskModal from './TaskModal'
-import { ProjectContext } from '../context/ProjectProvider'
-import { UserContext } from '../context/UserProvider'
+import ProjectTask from '../projects/ProjectTask'
+import TaskModal from '../Task/TaskModal'
+import { ProjectContext } from '../../context/ProjectProvider'
+import { UserContext } from '../../context/UserProvider'
 import { useParams } from 'react-router-dom'
 import { useDrop } from 'react-dnd'
 import {
