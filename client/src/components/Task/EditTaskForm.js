@@ -14,7 +14,8 @@ import {
     Textarea,
     useColorModeValue,
     RadioGroup,
-    Radio
+    Radio,
+    Select
   } from '@chakra-ui/react';
 
 export default function EditForm(props) {
@@ -28,7 +29,7 @@ export default function EditForm(props) {
     const [inputs, setInputs] = useState(initInputs)
     const { editUserTask } = useContext(UserContext)
     const { editUserProject } =useContext(ProjectContext)
-    const { setEditToggle, _id, isTask, isProject } = props
+    const { setEditToggle, _id, editType } = props
     const statusOptions = ['Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
     const priorities = ['Low', 'Normal', 'High']
 
@@ -40,14 +41,19 @@ export default function EditForm(props) {
         }))
     }
 
-    function handleSubmit(e) {
+    function handleProjectSubmit(e) {
         e.preventDefault()
         editUserProject(inputs, _id)
         setEditToggle(prevState => !prevState)
     }
 
+    function handleTaskSubmit(e) {
+        e.preventDefault()
+        editUserTask(inputs, _id)
+        setEditToggle(prevState => !prevState)
+    }
 
-    const { title, description, priority } = inputs
+    const { title, description, status } = inputs
 
     return (
         <Flex align={'center'} justify={'center'}>
@@ -72,6 +78,20 @@ export default function EditForm(props) {
                                     value={title}
                                 />
                         </FormControl>
+                        <Stack m={4}>
+                            <FormLabel>Status</FormLabel>
+                            <Select name='status' value={status} onChange={handleChange}>
+                                {
+                                    statusOptions.map(statusOption => 
+                                    <option 
+                                        key={statusOption} 
+                                        eventKey={statusOption}
+                                    > 
+                                        {statusOption} 
+                                    </option>)
+                                }
+                            </Select>
+                        </Stack>
                         <RadioGroup>
                             <Stack spacing={5} direction='row'>
                                 {
@@ -93,7 +113,7 @@ export default function EditForm(props) {
                         </FormControl>
                         <HStack spacing={10} justify='center' align='center'>
                             <Button
-                                onClick={handleSubmit}
+                                onClick={editType === 'task' ? handleTaskSubmit : handleProjectSubmit }
                                 colorScheme='yellow'
                                 variant='outline'
                                 size='md'

@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router'
 import { UserContext } from '../../context/UserProvider'
 import { CommentContext } from '../../context/CommentProvider'
+import { useParams } from 'react-router'
 import EditForm from '../Task/EditTaskForm'
 import LoremIpsum from 'react-lorem-ipsum'
 import { AiFillEdit, AiFillDelete, AiOutlineUnorderedList } from 'react-icons/ai'
@@ -18,7 +18,8 @@ import {
     Button,
     Textarea,
     Select,
-    Avatar
+    Avatar,
+    Badge
 } from '@chakra-ui/react'
 
 const initInputs = { comment: '' }
@@ -35,16 +36,13 @@ export default function TaskPage(props) {
     const boxShadow = useColorModeValue('lg', '2xl')
     const bgColor = useColorModeValue('white', 'gray.700')
     const contentBgColor = useColorModeValue('gray.100', 'gray.900')
-    const lowColor = useColorModeValue('blue.300', 'blue.600')
-    const normalColor = useColorModeValue('yellow.300', 'yellow.600')
-    const highColor = useColorModeValue('red.300', 'red.600')
 
     const statusOptions = ['Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
 
     const priorityColorSwitcher = priority => {
-        return priority == 'Low' ? lowColor
-             : priority == 'Normal' ? normalColor
-             : highColor;
+        return priority == 'Low' ? 'blue'
+             : priority == 'Normal' ? 'yellow'
+             : 'red';
      }
 
     useEffect(() => {
@@ -100,13 +98,13 @@ export default function TaskPage(props) {
                     <Flex direction='column' align='center' justify='center'>
 
                     <Flex align='center' justify='space-around'>
-                        <Flex 
-                            bgColor={priorityColorSwitcher(priority)} 
+                        <Badge 
+                            colorScheme={priorityColorSwitcher(priority)} 
                             p={1} 
                             borderRadius='5px'
                             >
                             {priority}
-                        </Flex>
+                        </Badge>
                         <Heading p={3}>{title}</Heading>
                         <IconButton onClick={taskEditToggle} icon={<AiFillEdit />} size='sm' variant='outline' />
                     </Flex>
@@ -229,7 +227,8 @@ export default function TaskPage(props) {
                 :
                 <EditForm 
                     setEditToggle={taskEditToggle}
-                    isTask={true} 
+                    editType='task'
+                    _id={currentTask._id} 
                 />
             }
             </Box>

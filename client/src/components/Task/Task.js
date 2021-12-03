@@ -100,6 +100,7 @@ export default function Task(props) {
               deleteUserTask={deleteUserTask}
               {...props}
               setEditToggle={setEditToggle}
+              editType='project'
             />
       }
     </>

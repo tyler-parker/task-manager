@@ -30,6 +30,10 @@ const userSchema = new Schema({
   tasks: {
     type: Array,
     default: []
+  },
+  projects: {
+    type: Array,
+    default: []
   }
 })
 
