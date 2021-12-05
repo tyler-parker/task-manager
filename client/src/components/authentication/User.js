@@ -10,7 +10,7 @@ import {
 
  function User(props) {
     const { username, _id} = props
-    const [tasks, setTasks] = useState([])
+    const [projects, setProjects] = useState([])
     const userAxios = axios.create()
 
     userAxios.interceptors.request.use(config => {
@@ -20,8 +20,8 @@ import {
     })
 
     useEffect(() => {
-        userAxios.get(`/api/task/user/${_id}`)
-        .then(res => setTasks(res.data))
+        userAxios.get(`/api/project/user/${_id}`)
+        .then(res => setProjects(res.data))
         .catch(err => console.log(err))
     }, [])
 
@@ -33,9 +33,9 @@ import {
         pos={'relative'}
         >
             <Divider />
-            <Heading align='center' p={4}>{username}'s Tasks</Heading>
+            <Heading align='center' p={4}>{username}'s Projects</Heading>
             <Grid gridTemplateColumns='repeat(2, 1fr)' gap={6}>
-                {tasks.map(task => <PublicTasks {...task}  key={task._id}/>)}
+                {projects.map(project => <PublicTasks {...project}  key={project._id}/>)}
             </Grid>
         </Box>
     )

@@ -81,7 +81,7 @@ export default function PublicTasks(props) {
                     <Text color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'}>
                     { userId }
                     </Text>
-                    <Link to={`/tasks/${_id}`}>
+                    <Link to={`/project/${_id}`}>
                         <Heading size='lg'>{title}</Heading>
                     </Link>
                     <Stack mt={2}>
