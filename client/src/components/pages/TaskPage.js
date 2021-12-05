@@ -178,11 +178,12 @@ export default function TaskPage(props) {
                                         <>
                                             <Flex w='95%' flexDirection='column' p={4}>
                                                 <Textarea
+                                                    focusBorderColor='blue'
                                                     onChange={handleChange} 
                                                     name='comment' 
                                                     value={inputs.comment} 
-                                                    placeholder={commentObj.comment} 
-                                                    >
+                                                    placeholder={commentObj.comment}
+                                                >
 
                                                 </Textarea>
                                             </Flex>
