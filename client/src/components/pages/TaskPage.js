@@ -28,9 +28,9 @@ export default function TaskPage(props) {
     const { taskId } = useParams()
 
     const { getUserTask, currentTask, user: { username } } = useContext(UserContext)
-    const { title, description, createdAt, priority, status } = currentTask
+    const { title, description, createdAt, priority, status, } = currentTask
 
-    const { getAllComments, deleteComment, submitComment, comments, taskComment, _id } = useContext(CommentContext)
+    const { getAllComments, deleteComment, submitComment, comments, taskComment, editComment } = useContext(CommentContext)
 
     const userBgColor = useColorModeValue('gray.600', 'gray.300')
     const boxShadow = useColorModeValue('lg', '2xl')
@@ -47,9 +47,6 @@ export default function TaskPage(props) {
 
     useEffect(() => {
         getUserTask(taskId)
-        console.log(comments)
-        console.log(taskId)
-        console.log(currentTask)
     }, [taskId])
 
     useEffect(() => {
@@ -70,16 +67,13 @@ export default function TaskPage(props) {
             ...prevInputs,
             [name]: value
         }))
-        console.log(inputs)
     }
-
 
     function handleSubmit(e){
         e.preventDefault()
         submitComment(inputs, taskId)
         getAllComments(taskId)
         setInputs(initInputs)
-        console.log(inputs)
     }
 
     return (

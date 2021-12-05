@@ -36,8 +36,12 @@ function CommentProvider(props) {
         userAxios.post(`/api/comment/${taskId}`, newComment)
             .then(res => setComments(prevState => prevState, res.data ))
             .catch(err => console.log(err))
-            setTaskComment("")
-            getAllComments()
+    }
+
+    function editComment(editedComment, taskId, commentId) {
+        userAxios.put(`/api/comment/${taskId}/${commentId}`, editedComment)
+            .then(res => setComments(prevState => prevState, res.data ))
+            .catch(err => console.log(err))
     }
 
     return (
@@ -46,6 +50,7 @@ function CommentProvider(props) {
                 getAllComments,
                 deleteComment,
                 submitComment,
+                editComment,
                 taskComment,
                 comments
             }}>
