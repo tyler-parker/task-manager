@@ -29,7 +29,7 @@ export default function EditForm(props) {
     const [inputs, setInputs] = useState(initInputs)
     const { editUserTask } = useContext(UserContext)
     const { editUserProject } =useContext(ProjectContext)
-    const { setEditToggle, _id, editType } = props
+    const { setEditToggle, _id, editType, currentTask } = props
     const statusOptions = ['Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
     const priorities = ['Low', 'Normal', 'High']
 
@@ -72,15 +72,18 @@ export default function EditForm(props) {
                         <FormControl>
                             <FormLabel>Title</FormLabel>
                                 <Input
+                                    placeholder={currentTask.title}
                                     onChange={handleChange} 
                                     type="text" 
                                     name="title"
                                     value={title}
-                                />
+                                >
+                                    
+                                </Input>
                         </FormControl>
                         <Stack m={4}>
                             <FormLabel>Status</FormLabel>
-                            <Select name='status' value={status} onChange={handleChange}>
+                            <Select placeholder={currentTask.status} name='status' value={status} onChange={handleChange}>
                                 {
                                     statusOptions.map(statusOption => 
                                     <option 
@@ -105,6 +108,7 @@ export default function EditForm(props) {
                         <FormControl>
                             <FormLabel>Description</FormLabel>
                                 <Textarea
+                                    placeholder={currentTask.description}
                                     onChange={handleChange} 
                                     type="text" 
                                     name="description"

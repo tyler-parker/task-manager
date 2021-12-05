@@ -13,11 +13,12 @@ import {
     HStack,
     Button,
     Divider,
+    useColorModeValue
   } from '@chakra-ui/react';
 
 
 export default function PublicTasks(props) {
-    const { title, description, _id, userId } = props
+    const { title, description, _id, userId, priority } = props
 
     const userAxios = axios.create()
 
@@ -32,7 +33,15 @@ export default function PublicTasks(props) {
     const [commentToggle, setCommentToggle] = useState(false)
     const [show, setShow] = useState(false)
     const handleToggle = () => setShow(!show)
+    const lowColor = useColorModeValue('blue.300', 'blue.600')
+    const normalColor = useColorModeValue('yellow.300', 'yellow.600')
+    const highColor = useColorModeValue('red.300', 'red.600')
     
+    const colorSwitcher = priority => {
+        return priority == 'Low' ? lowColor
+             : priority == 'Normal' ? normalColor
+             : highColor;
+     }
 
     function getAllComments() {
         userAxios.get(`/api/comment/${_id}`)
@@ -76,6 +85,8 @@ export default function PublicTasks(props) {
             rounded={'lg'}
             pos={'relative'}
             align='center'
+            border='solid'
+            borderColor={colorSwitcher(priority)}
             >
                 <Stack pt={10} align={'center'}>
                     <Text color={'gray.500'} fontSize={'sm'} textTransform={'uppercase'}>

@@ -34,6 +34,11 @@ export default function UserMenu(props) {
                       Profile
                     </MenuItem>
                   </Link>
+                  <Link to='/public'>
+                    <MenuItem>
+                      Public
+                    </MenuItem>
+                  </Link>
                   <Link to='/'>
                     <MenuItem onClick={logout}>
                       Logout

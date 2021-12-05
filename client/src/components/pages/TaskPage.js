@@ -34,8 +34,8 @@ export default function TaskPage(props) {
 
     const userBgColor = useColorModeValue('gray.600', 'gray.300')
     const boxShadow = useColorModeValue('lg', '2xl')
-    const bgColor = useColorModeValue('white', 'gray.700')
-    const contentBgColor = useColorModeValue('gray.100', 'gray.900')
+    const bgColor = useColorModeValue('gray.100', 'gray.600')
+    const contentBgColor = useColorModeValue('gray.200', 'gray.900')
 
     const statusOptions = ['Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
 
@@ -93,22 +93,22 @@ export default function TaskPage(props) {
                 bg={bgColor}
                 w={'90%'}
             >
-                { !taskToggle ?
+            { !taskToggle ?
                     <>
                     <Flex direction='column' align='center' justify='center'>
-
-                    <Flex align='center' justify='space-around'>
+                        <Flex align='center' justify='space-around'>
+                            <Heading p={3}>{title}</Heading>
+                            <IconButton onClick={taskEditToggle} icon={<AiFillEdit />} size='sm' variant='outline' />
+                        </Flex>
+                    <Flex w='full' justify='center' align='center'>
                         <Badge 
                             colorScheme={priorityColorSwitcher(priority)} 
-                            p={1} 
+                            p={1}
+                            m={2} 
                             borderRadius='5px'
                             >
                             {priority}
                         </Badge>
-                        <Heading p={3}>{title}</Heading>
-                        <IconButton onClick={taskEditToggle} icon={<AiFillEdit />} size='sm' variant='outline' />
-                    </Flex>
-                    <Flex w='full' justify='center' align='center' p={2}>
                         <Text color={userBgColor}>
                             Created by: {username}
                         </Text>
@@ -225,7 +225,8 @@ export default function TaskPage(props) {
                 </Flex>
                 </>
                 :
-                <EditForm 
+                <EditForm
+                    currentTask={currentTask}
                     setEditToggle={taskEditToggle}
                     editType='task'
                     _id={currentTask._id} 
