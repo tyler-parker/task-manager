@@ -1,5 +1,5 @@
 # task-manager (WIP)
-## Organize your work with projects and tasks
+Organize your work with projects and tasks
 
 # Features:
 * User Authentication (login/signup/authorization)
