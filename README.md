@@ -18,9 +18,12 @@ Organize your work with projects and tasks
 * Menu drawer that gives a view of users' own projects anywhere in the app
 * Assigning users to tasks
 * Need to refactor and make smaller components!
+* Delete and edit tasks in kanban view
+* Edit project in project view
 
 # Bugs/defects:
 * Comment edit function on front-end currently not working in `EditTaskForm` component (working on the back end)
 * Status drop-down in the `TaskPage` currently doesn't edit the status of the task (just for show right now)
 * Task creator username is just showing the user ID. Been working on this but set it aside for now.
 * Project cards show _all_ tasks, rather than tasks associated with project, should be a quick fix
+* Project "created by" is pointing to the property in the project model that I previously defaulted to "Old User
