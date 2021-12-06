@@ -32,9 +32,9 @@ commentRouter.post('/:taskId', (req, res, next) => {
         }
     )
 })
-commentRouter.put('/:taskId', (req, res, next) => {
+commentRouter.put('/:taskId/:commentId', (req, res, next) => {
     Comment.findByIdAndUpdate(
-        { _id: req.params.taskId, user: req.user._id },
+        { _id: req.params.commentId, user: req.user._id },
         req.body,
         { new: true },
         (err, comment) => {
@@ -47,6 +47,20 @@ commentRouter.put('/:taskId', (req, res, next) => {
         }
     )
 })
+
+commentRouter.get('/:taskId/:commentId', (req, res, next) => {
+    Comment.findById(req.params.commentId, (err, project) => {
+      if (err) {
+        res.status(500)
+        return next(err)
+      } else if (!project) {
+        res.status(404)
+        return next(new Error('No comment has been found.'))
+      } else {
+          return res.status(200).send(project)
+      }
+    })
+  })
 
 commentRouter.delete('/:commentId', (req, res, next) => {
     Comment.findByIdAndDelete({
