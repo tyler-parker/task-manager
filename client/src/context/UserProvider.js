@@ -22,6 +22,7 @@ function UserProvider(props) {
 
     const [userState, setUserState] = useState(initState)
     const [allTasks, setAllTasks] = useState([])
+    const [foundUser, setFoundUser] = useState()
 
     function signup(credentials) {
         axios.post('/auth/signup', credentials)
@@ -68,6 +69,12 @@ function UserProvider(props) {
             ...prevState,
             errMsg
         }))
+    }
+
+    function getUser(userId) {
+        userAxios.get(`/api/users/${userId}`)
+            .then(res => setFoundUser(res.data))
+            .catch(err => console.log(err))
     }
 
     function getAllUserTasks() {
@@ -132,9 +139,11 @@ function UserProvider(props) {
         <UserContext.Provider
             value={{
                 ...userState,
+                foundUser,
                 signup,
                 login,
                 logout,
+                getUser,
                 getAllUserTasks,
                 addUserTask,
                 getUserTasks,

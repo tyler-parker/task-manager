@@ -27,8 +27,9 @@ const initInputs = { comment: '' }
 export default function TaskPage(props) {
     const { taskId } = useParams()
 
-    const { getUserTask, currentTask, user: { username } } = useContext(UserContext)
-    const { title, description, createdAt, priority, status, } = currentTask
+    const { getUserTask, currentTask, foundUser, getUser } = useContext(UserContext)
+    const { title, description, createdAt, priority, status, user } = currentTask
+    // const { username } = foundUser
 
     const { getAllComments, deleteComment, submitComment, comments, taskComment, editComment } = useContext(CommentContext)
 
@@ -47,6 +48,9 @@ export default function TaskPage(props) {
 
     useEffect(() => {
         getUserTask(taskId)
+        getUser(user)
+        console.log(user)
+        console.log(foundUser)
     }, [taskId])
 
     useEffect(() => {
@@ -104,7 +108,7 @@ export default function TaskPage(props) {
                             {priority}
                         </Badge>
                         <Text color={userBgColor}>
-                            Created by: {username}
+                            Created by: {user}
                         </Text>
                     </Flex>
                     <Flex 
