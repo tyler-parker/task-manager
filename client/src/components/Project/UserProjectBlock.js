@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react"
-import PublicTasks from "../Project/PublicProjects.js"
+import PublicTasks from "./PublicProjects.js"
 import axios from "axios"
 import {
     Box,

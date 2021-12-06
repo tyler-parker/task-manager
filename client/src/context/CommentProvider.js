@@ -15,7 +15,7 @@ userAxios.interceptors.request.use(config => {
 function CommentProvider(props) {
 
     const [comments, setComments] = useState([])
-    const [singleComment, setSingleComment] = useState("")
+    const [singleComment, setSingleComment] = useState()
 
     function getAllComments(taskId) {
         userAxios.get(`/api/comment/${taskId}`)

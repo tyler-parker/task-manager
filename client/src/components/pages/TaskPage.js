@@ -3,6 +3,7 @@ import { UserContext } from '../../context/UserProvider'
 import { CommentContext } from '../../context/CommentProvider'
 import { useParams } from 'react-router'
 import EditForm from '../Task/EditTaskForm'
+import EditTaskComment from '../comment/EditTaskComment'
 import LoremIpsum from 'react-lorem-ipsum'
 import { AiFillEdit, AiFillDelete, AiOutlineUnorderedList } from 'react-icons/ai'
 import {
@@ -55,6 +56,7 @@ export default function TaskPage(props) {
 
     useEffect(() => {
         getAllComments(taskId)
+        console.log(taskComment)
     }, [])
 
     const [toggle, setToggle] = useState(false)
@@ -174,29 +176,12 @@ export default function TaskPage(props) {
                                         </>
                                             :
                                         <>
-                                            <Flex w='95%' flexDirection='column' p={4}>
-                                                <Textarea
-                                                    focusBorderColor='blue'
-                                                    onChange={handleChange} 
-                                                    name='comment' 
-                                                    value={comment} 
-                                                    placeholder={commentObj.comment}
-                                                >
+                                            <EditTaskComment 
+                                                commentId={commentObj._id} 
+                                                taskId={taskId} 
+                                                handleToggle={handleToggle}
+                                            />
 
-                                                </Textarea>
-                                            </Flex>
-                                            <Flex w='95%' justify='end' >
-                                                <Button variant='outline' colorScheme='yellow' size='sm'>
-                                                    Edit Comment
-                                                </Button>
-                                                <Button
-                                                    ml={4} 
-                                                    onClick={handleToggle}  
-                                                    size='sm'
-                                                >
-                                                    Close
-                                                </Button>
-                                            </Flex>
                                         </>
                                         }
                                     </Flex> 

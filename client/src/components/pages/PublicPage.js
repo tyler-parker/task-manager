@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import User from '../authentication/User.js'
+import User from '../Project/UserProjectBlock.js'
 import axios from "axios"
 import {
   Heading,

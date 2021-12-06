@@ -28,7 +28,7 @@ export default function EditForm(props) {
     }
     const [inputs, setInputs] = useState(initInputs)
     const { editUserTask } = useContext(UserContext)
-    const { editUserProject } =useContext(ProjectContext)
+    const { editUserProject } = useContext(ProjectContext)
     const { setEditToggle, _id, editType, currentTask } = props
     const statusOptions = ['Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
     const priorities = ['Low', 'Normal', 'High']
