@@ -161,7 +161,7 @@ export default function TaskPage(props) {
                                                     colorScheme='yellow' 
                                                     icon={<AiFillEdit />}
                                                     onClick={handleToggle}
-                                                    />
+                                                />
                                                 <IconButton
                                                     ml={4} 
                                                     size='sm' 
@@ -169,7 +169,7 @@ export default function TaskPage(props) {
                                                     colorScheme='red' 
                                                     icon={<AiFillDelete />}
                                                     onClick={() => deleteComment(commentObj._id)}
-                                                    />
+                                                />
                                             </Flex>
                                         </>
                                             :
@@ -179,7 +179,7 @@ export default function TaskPage(props) {
                                                     focusBorderColor='blue'
                                                     onChange={handleChange} 
                                                     name='comment' 
-                                                    value={inputs.comment} 
+                                                    value={comment} 
                                                     placeholder={commentObj.comment}
                                                 >
 
@@ -187,13 +187,13 @@ export default function TaskPage(props) {
                                             </Flex>
                                             <Flex w='95%' justify='end' >
                                                 <Button variant='outline' colorScheme='yellow' size='sm'>
-                                                    Submit Comment
+                                                    Edit Comment
                                                 </Button>
                                                 <Button
                                                     ml={4} 
                                                     onClick={handleToggle}  
                                                     size='sm'
-                                                    >
+                                                >
                                                     Close
                                                 </Button>
                                             </Flex>
