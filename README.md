@@ -17,8 +17,8 @@ Initializing in the terminal:
 * Persisted data with MongoDB
 * Chakra-UI
 * Task KanBan within project view
-** Swimlanes for status (object status property determines placement in swimlane)
-** Task card color to denote priority (color switcher based off object priority property)
+  - Swimlanes for status (object status property determines placement in swimlane)
+  - Task card color to denote priority (color switcher based off object priority property)
 * Public view of other users' projects and their tasks
 * Ability to comment on other yours and other users' tasks
 
