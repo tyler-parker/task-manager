@@ -13,6 +13,9 @@ import {
     HStack,
     Textarea,
     useColorModeValue,
+    RadioGroup,
+    Radio,
+    Select
   } from '@chakra-ui/react';
 
 export default function EditForm(props) {
@@ -25,9 +28,10 @@ export default function EditForm(props) {
     }
     const [inputs, setInputs] = useState(initInputs)
     const { editUserTask } = useContext(UserContext)
-    const { editUserProject } =useContext(ProjectContext)
-    const { setEditToggle, _id, priority } = props
+    const { editUserProject } = useContext(ProjectContext)
+    const { setEditToggle, _id, editType, currentTask } = props
     const statusOptions = ['Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
+    const priorities = ['Low', 'Normal', 'High']
 
     function handleChange(e) {
         const { name, value } = e.target
@@ -35,17 +39,21 @@ export default function EditForm(props) {
             ...prevInputs,
             [name]: value
         }))
-
     }
 
-    function handleSubmit(e) {
+    function handleProjectSubmit(e) {
         e.preventDefault()
         editUserProject(inputs, _id)
         setEditToggle(prevState => !prevState)
     }
 
+    function handleTaskSubmit(e) {
+        e.preventDefault()
+        editUserTask(inputs, _id)
+        setEditToggle(prevState => !prevState)
+    }
 
-    const { title, description } = inputs
+    const { title, description, status } = inputs
 
     return (
         <Flex align={'center'} justify={'center'}>
@@ -64,24 +72,43 @@ export default function EditForm(props) {
                         <FormControl>
                             <FormLabel>Title</FormLabel>
                                 <Input
+                                    placeholder={currentTask.title}
                                     onChange={handleChange} 
                                     type="text" 
                                     name="title"
                                     value={title}
-                                />
+                                >
+                                    
+                                </Input>
                         </FormControl>
-                        <FormControl>
-                        <FormLabel>Priority</FormLabel>
-                            <Input
-                                onChange={handleChange} 
-                                type="text" 
-                                name="priority"
-                                value={priority}
-                            />
-                        </FormControl>
+                        <Stack m={4}>
+                            <FormLabel>Status</FormLabel>
+                            <Select placeholder={currentTask.status} name='status' value={status} onChange={handleChange}>
+                                {
+                                    statusOptions.map(statusOption => 
+                                    <option 
+                                        key={statusOption} 
+                                        eventKey={statusOption}
+                                    > 
+                                        {statusOption} 
+                                    </option>)
+                                }
+                            </Select>
+                        </Stack>
+                        <RadioGroup>
+                            <Stack spacing={5} direction='row'>
+                                {
+                                    priorities.map(priorityVal =>                                 
+                                    <Radio onChange={handleChange} name='priority' value={priorityVal}>
+                                        {priorityVal}
+                                    </Radio>)
+                                }
+                            </Stack>
+                        </RadioGroup>
                         <FormControl>
                             <FormLabel>Description</FormLabel>
                                 <Textarea
+                                    placeholder={currentTask.description}
                                     onChange={handleChange} 
                                     type="text" 
                                     name="description"
@@ -90,7 +117,7 @@ export default function EditForm(props) {
                         </FormControl>
                         <HStack spacing={10} justify='center' align='center'>
                             <Button
-                                onClick={handleSubmit}
+                                onClick={editType === 'task' ? handleTaskSubmit : handleProjectSubmit }
                                 colorScheme='yellow'
                                 variant='outline'
                                 size='md'

@@ -3,7 +3,7 @@ import { Route, Switch, Redirect} from "react-router-dom";
 import Navbar from "./components/nav/Navbar.js"
 import Auth from "./components/authentication/Auth.js"
 import Profile from "./components/pages/Profile.js"
-import Public from "./components/pages/Public.js"
+import Public from "./components/pages/PublicPage.js"
 import Project from "./components/pages/ProjectPage.js";
 import ProtectedRoute from "./components/authentication/ProtectedRoute.js"
 import TaskPage from "./components/pages/TaskPage.js";

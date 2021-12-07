@@ -1,9 +1,9 @@
 import React, {useEffect, useContext} from 'react'
 import TaskForm from '../Task/TaskForm.js'
-import Task from '../Task/Task'
+import Task from '../Project/ProjectCard'
 import { UserContext } from "../../context/UserProvider.js"
 import { ProjectContext } from '../../context/ProjectProvider'
-import ProjectList from '../projects/ProjectList'
+import ProjectList from '../Project/ProjectList'
 import Split from 'react-split'
 import {
     Box,

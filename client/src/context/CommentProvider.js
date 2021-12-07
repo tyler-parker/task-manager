@@ -15,7 +15,7 @@ userAxios.interceptors.request.use(config => {
 function CommentProvider(props) {
 
     const [comments, setComments] = useState([])
-    const [taskComment, setTaskComment] = useState("")
+    const [singleComment, setSingleComment] = useState()
 
     function getAllComments(taskId) {
         userAxios.get(`/api/comment/${taskId}`)
@@ -23,6 +23,12 @@ function CommentProvider(props) {
             setComments(res.data)
         })
         .catch(err => console.log(err))
+    }
+
+    function getSingleComment(taskId, commentId) {
+        userAxios.get(`/api/comment/${taskId}/${commentId}`)
+            .then(res => setSingleComment(res.data))
+            .catch(err => console.log(err))
     }
     
     function deleteComment(commentId) {
@@ -36,8 +42,12 @@ function CommentProvider(props) {
         userAxios.post(`/api/comment/${taskId}`, newComment)
             .then(res => setComments(prevState => prevState, res.data ))
             .catch(err => console.log(err))
-            setTaskComment("")
-            getAllComments()
+    }
+
+    function editComment(editedComment, taskId, commentId) {
+        userAxios.put(`/api/comment/${taskId}/${commentId}`, editedComment)
+            .then(res => setComments(prevState => prevState, res.data ))
+            .catch(err => console.log(err))
     }
 
     return (
@@ -46,7 +56,9 @@ function CommentProvider(props) {
                 getAllComments,
                 deleteComment,
                 submitComment,
-                taskComment,
+                editComment,
+                getSingleComment,
+                singleComment,
                 comments
             }}>
 

@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
-import { UserContext } from "../context/UserProvider.js"
+import { UserContext } from "../../context/UserProvider.js"
 import {
     Menu,
     MenuButton,
@@ -32,6 +32,11 @@ export default function UserMenu(props) {
                   <Link to='/profile'>
                     <MenuItem>
                       Profile
+                    </MenuItem>
+                  </Link>
+                  <Link to='/public'>
+                    <MenuItem>
+                      Public
                     </MenuItem>
                   </Link>
                   <Link to='/'>

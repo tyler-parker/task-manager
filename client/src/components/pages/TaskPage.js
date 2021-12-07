@@ -1,7 +1,9 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { useParams } from 'react-router'
 import { UserContext } from '../../context/UserProvider'
 import { CommentContext } from '../../context/CommentProvider'
+import { useParams } from 'react-router'
+import EditForm from '../Task/EditTaskForm'
+import EditTaskComment from '../comment/EditTaskComment'
 import LoremIpsum from 'react-lorem-ipsum'
 import { AiFillEdit, AiFillDelete, AiOutlineUnorderedList } from 'react-icons/ai'
 import {
@@ -17,7 +19,8 @@ import {
     Button,
     Textarea,
     Select,
-    Avatar
+    Avatar,
+    Badge
 } from '@chakra-ui/react'
 
 const initInputs = { comment: '' }
@@ -25,31 +28,44 @@ const initInputs = { comment: '' }
 export default function TaskPage(props) {
     const { taskId } = useParams()
 
-    const { getUserTask, currentTask } = useContext(UserContext)
-    const { title, description, username, createdAt, priority, status } = currentTask
+    const { getUserTask, currentTask, foundUser, getUser } = useContext(UserContext)
+    const { title, description, createdAt, priority, status, user } = currentTask
+    // const { username } = foundUser
 
-    const { getAllComments, deleteComment, submitComment, comments, taskComment, _id } = useContext(CommentContext)
+    const { getAllComments, deleteComment, submitComment, comments, taskComment, editComment } = useContext(CommentContext)
 
     const userBgColor = useColorModeValue('gray.600', 'gray.300')
     const boxShadow = useColorModeValue('lg', '2xl')
-    const bgColor = useColorModeValue('white', 'gray.700')
-    const contentBgColor = useColorModeValue('gray.100', 'gray.900')
+    const bgColor = useColorModeValue('gray.100', 'gray.600')
+    const contentBgColor = useColorModeValue('gray.200', 'gray.900')
+
+    const statusOptions = ['Backlogged', 'In Progress', 'Testing', 'Approved', 'Completed']
+
+    const priorityColorSwitcher = priority => {
+        return priority == 'Low' ? 'blue'
+             : priority == 'Normal' ? 'yellow'
+             : 'red';
+     }
 
     useEffect(() => {
         getUserTask(taskId)
-        console.log(comments)
-        console.log(taskId)
-        console.log(currentTask)
+        getUser(user)
+        console.log(user)
+        console.log(foundUser)
     }, [taskId])
 
     useEffect(() => {
         getAllComments(taskId)
+        console.log(taskComment)
     }, [])
 
     const [toggle, setToggle] = useState(false)
+    const [taskToggle, setTaskToggle] = useState(false)
     const [inputs, setInputs] = useState(initInputs)
+    const { comment } = inputs
 
     const handleToggle = () => {setToggle(!toggle)}
+    const taskEditToggle = () => {setTaskToggle(!taskToggle)}
 
     function handleChange(e){
         const {name, value} = e.target
@@ -57,17 +73,13 @@ export default function TaskPage(props) {
             ...prevInputs,
             [name]: value
         }))
-        console.log(inputs)
     }
-
-    const { comment } = inputs
 
     function handleSubmit(e){
         e.preventDefault()
         submitComment(inputs, taskId)
         getAllComments(taskId)
         setInputs(initInputs)
-        console.log(inputs)
     }
 
     return (
@@ -81,15 +93,24 @@ export default function TaskPage(props) {
                 bg={bgColor}
                 w={'90%'}
             >
-                <Flex direction='column' align='center' justify='center'>
-
-                    <Flex align='center' justify='space-around'>
-                        <Heading p={3}>{title}</Heading>
-                        <IconButton icon={<AiFillEdit />} size='sm' colorScheme='yellow' variant='outline'>Edit Task</IconButton>
-                    </Flex>
-                    <Flex w='full' justify='center' align='center' p={2}>
+            { !taskToggle ?
+                    <>
+                    <Flex direction='column' align='center' justify='center'>
+                        <Flex align='center' justify='space-around'>
+                            <Heading p={3}>{title}</Heading>
+                            <IconButton onClick={taskEditToggle} icon={<AiFillEdit />} size='sm' variant='outline' />
+                        </Flex>
+                    <Flex w='full' justify='center' align='center'>
+                        <Badge 
+                            colorScheme={priorityColorSwitcher(priority)} 
+                            p={1}
+                            m={2} 
+                            borderRadius='5px'
+                            >
+                            {priority}
+                        </Badge>
                         <Text color={userBgColor}>
-                            Created by: {username}
+                            Created by: {user}
                         </Text>
                     </Flex>
                     <Flex 
@@ -97,7 +118,7 @@ export default function TaskPage(props) {
                         border='1px solid gray' 
                         borderRadius='5px' 
                         w={{sm: '95%', md: '85%', lg: '75%', xl: "75%"}} 
-                    >
+                        >
                         <Grid grid-templateRows='repeat(2, 1fr)' w='full'>
 
                             <GridItem 
@@ -105,10 +126,10 @@ export default function TaskPage(props) {
                                 align='center' 
                                 justify='center'
                                 p={2}
-                            >
+                                >
                                 <Flex p={4} justify='end'>
                                     <Select placeholder={status} w='30%'>
-
+                                        {statusOptions.map(status => <option>{status}</option>)}
                                     </Select>
                                 </Flex>
 
@@ -124,7 +145,7 @@ export default function TaskPage(props) {
                             <GridItem 
                                 align='center' 
                                 justify='center' 
-                            >
+                                >
                             {
                                 comments.map(commentObj =>
                                     <Flex align='start' justify='start' direction='column' p={4} w='95%'>
@@ -142,7 +163,7 @@ export default function TaskPage(props) {
                                                     colorScheme='yellow' 
                                                     icon={<AiFillEdit />}
                                                     onClick={handleToggle}
-                                                    />
+                                                />
                                                 <IconButton
                                                     ml={4} 
                                                     size='sm' 
@@ -150,33 +171,17 @@ export default function TaskPage(props) {
                                                     colorScheme='red' 
                                                     icon={<AiFillDelete />}
                                                     onClick={() => deleteComment(commentObj._id)}
-                                                    />
+                                                />
                                             </Flex>
                                         </>
                                             :
                                         <>
-                                            <Flex w='95%' flexDirection='column' p={4}>
-                                                {/* <Textarea
-                                                    onChange={handleChange} 
-                                                    name='comment' 
-                                                    value={inputs.comment} 
-                                                    placeholder={commentObj.comment} 
-                                                >
+                                            <EditTaskComment 
+                                                commentId={commentObj._id} 
+                                                taskId={taskId} 
+                                                handleToggle={handleToggle}
+                                            />
 
-                                                </Textarea> */}
-                                            </Flex>
-                                            <Flex w='95%' justify='end' >
-                                                <Button variant='outline' colorScheme='yellow' size='sm'>
-                                                    Submit Comment
-                                                </Button>
-                                                <Button
-                                                    ml={4} 
-                                                    onClick={handleToggle}  
-                                                    size='sm'
-                                                >
-                                                    Close
-                                                </Button>
-                                            </Flex>
                                         </>
                                         }
                                     </Flex> 
@@ -188,7 +193,7 @@ export default function TaskPage(props) {
                                         onChange={handleChange} 
                                         name='comment' 
                                         value={comment}
-                                    >
+                                        >
 
                                     </Textarea>
                                 </Flex>
@@ -202,6 +207,15 @@ export default function TaskPage(props) {
                         </Grid>
                     </Flex>
                 </Flex>
+                </>
+                :
+                <EditForm
+                    currentTask={currentTask}
+                    setEditToggle={taskEditToggle}
+                    editType='task'
+                    _id={currentTask._id} 
+                />
+            }
             </Box>
         </Flex>
     )

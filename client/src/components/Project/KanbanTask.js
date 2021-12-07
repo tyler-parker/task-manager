@@ -38,7 +38,7 @@ export default function ProjectTask(props) {
             boxShadow={boxShadow}
             bg={colorSwitcher(priority)}
             rounded={'lg'}
-            w={{sm: '90%', md: '20em', lg: '15em', xl: '90%'}}
+            w={{sm: '65%', md: '20em', lg: '15em', xl: '90%'}}
             ref={drag}
         >
             <Link to={`/tasks/${_id}`}>

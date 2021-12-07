@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import ProjectTask from '../projects/ProjectTask'
+import ProjectTask from '../Project/KanbanTask'
 import TaskModal from '../Task/TaskModal'
 import { ProjectContext } from '../../context/ProjectProvider'
 import { UserContext } from '../../context/UserProvider'

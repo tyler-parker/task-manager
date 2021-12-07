@@ -5,8 +5,6 @@ const morgan = require('morgan')
 const mongoose = require('mongoose')
 const expressjwt = require("express-jwt")
 
-process.env.SECRET
-
 app.use(express.json())
 app.use(morgan('dev'))
 

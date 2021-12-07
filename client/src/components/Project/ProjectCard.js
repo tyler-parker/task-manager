@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react"
 import { UserContext } from "../../context/UserProvider.js"
 import { ProjectContext } from "../../context/ProjectProvider.js";
-import EditTaskForm from "./EditTaskForm.js"
+import EditTaskForm from "../Task/EditTaskForm.js"
 import { BsChevronDoubleDown, BsChevronDoubleUp, } from 'react-icons/bs'
 import { AiFillEdit, AiFillDelete, AiOutlineUnorderedList } from 'react-icons/ai'
 import { useDrag } from 'react-dnd'
@@ -20,13 +20,22 @@ import {
 
 export default function Task(props) {
 
-  const { title, _id } = props
+  const { title, _id, priority } = props
   const [editToggle, setEditToggle] = useState(false)
   const [showMore, setShowMore] = useState(false)
   const { deleteUserTask, tasks } = useContext(UserContext)
   const { deleteUserProject } = useContext(ProjectContext)
   const boxShadow = useColorModeValue('lg', '2xl')
   const bgColor = useColorModeValue('white', 'gray.700')
+  const lowColor = useColorModeValue('blue.300', 'blue.600')
+  const normalColor = useColorModeValue('yellow.300', 'yellow.600')
+  const highColor = useColorModeValue('red.300', 'red.600')
+
+  const colorSwitcher = priority => {
+    return priority == 'Low' ? lowColor
+         : priority == 'Normal' ? normalColor
+         : highColor;
+ }
 
   const [{isDragging}, drag] = useDrag(() => ({
     type: 'task', 
@@ -48,10 +57,12 @@ export default function Task(props) {
         bg={bgColor}
         w={{sm: 'sm', md: 'xl', lg: '2xl', xl: 'xl'}}
         ref={drag}
+        border='solid'
+        borderColor={colorSwitcher(priority)}
         >
           <Stack m={6} pt={10} align={'center'}>
             <Link to={`project/${_id}`}>
-              <Heading fontSize={'2xl'} fontFamily={'body'} fontWeight={500}>
+              <Heading fontSize={'2xl'} fontWeight={500}>
                 { title }
               </Heading>
             </Link>
@@ -59,7 +70,7 @@ export default function Task(props) {
                 <IconButton
                   variant='outline'
                   colorScheme='yellow'
-                  size='lg'
+                  size='md'
                   icon={<AiFillEdit />}
                   onClick={() => setEditToggle(prevState => !prevState)}
                 />
@@ -67,7 +78,7 @@ export default function Task(props) {
                 <IconButton
                   variant='outline'
                   colorScheme='red'
-                  size='lg'
+                  size='md'
                   icon={<AiFillDelete />}
                   onClick={() => deleteUserProject(_id)}
                 />
@@ -100,6 +111,7 @@ export default function Task(props) {
               deleteUserTask={deleteUserTask}
               {...props}
               setEditToggle={setEditToggle}
+              editType='project'
             />
       }
     </>

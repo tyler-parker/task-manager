@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import User from '../authentication/User.js'
+import User from '../Project/UserProjectBlock.js'
 import axios from "axios"
 import {
   Heading,
@@ -26,7 +26,7 @@ export default function Public() {
 
   return (
         <Stack align='center' w='full'>
-            <Heading size='2xl' m={5}>Public Tasks</Heading>
+            <Heading size='2xl' m={5}>Public Projects</Heading>
             <Box w="full">
               {users.map(user => <User {...user}  key={user._id}/>)}
             </Box>
