@@ -1,6 +1,17 @@
 # task-manager (WIP)
 Organize your work with projects and tasks
 
+# Starting the app locally
+Requirements:
+* `Node` Currently using v14.16
+* `Mongo DB`
+* `React`
+
+Initializing in the terminal:
+* run `Mongod`, or however you want to start the DB instance
+* run `nodemon server.js`
+* `cd` into the `client` folder and run `npm start`
+
 # Features:
 * User Authentication (login/signup/authorization)
 * Persisted data with MongoDB
